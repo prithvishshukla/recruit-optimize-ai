@@ -3,6 +3,10 @@ import ReactDOM from 'react-dom/client';
 import { RouterProvider, createRouter } from '@tanstack/react-router';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
+import { AuthProvider } from '@/contexts/auth-context';
+import { Toaster } from '@/components/ui/sonner';
+import { GlobalErrorBoundary } from '@/components/global-error-boundary';
+
 // Import styles first
 import './styles.css';
 
@@ -30,8 +34,13 @@ const root = ReactDOM.createRoot(document.getElementById('root')!);
 
 root.render(
   <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
-    </QueryClientProvider>
+    <GlobalErrorBoundary>
+      <QueryClientProvider client={queryClient}>
+        <AuthProvider>
+          <RouterProvider router={router} />
+          <Toaster />
+        </AuthProvider>
+      </QueryClientProvider>
+    </GlobalErrorBoundary>
   </React.StrictMode>
 );

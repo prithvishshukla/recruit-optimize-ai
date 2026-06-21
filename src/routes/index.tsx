@@ -1,5 +1,17 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import logo from "@/assets/talentforge-logo.png";
+import { useAuth } from "@/contexts/auth-context";
+import { useQuery } from "@tanstack/react-query";
+import { db } from "@/lib/db";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuLabel,
+} from "@/components/ui/dropdown-menu";
 
 export const Route = createFileRoute("/")({
   component: Landing,
@@ -19,7 +31,48 @@ function Logo({ className = "h-9" }: { className?: string }) {
   );
 }
 
+function getInitials(name: string): string {
+  if (!name) return "U";
+  if (name.includes("@")) {
+    const parts = name.split("@")[0].split(/[\._\-]+/);
+    if (parts.length >= 2) {
+      return (parts[0][0] + parts[1][0]).toUpperCase();
+    }
+    return parts[0][0]?.toUpperCase() || "U";
+  }
+  const parts = name.trim().split(/\s+/);
+  if (parts.length >= 2) {
+    return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+  }
+  return parts[0][0]?.toUpperCase() || "U";
+}
+
 function Nav() {
+  const { user, loading, signOut } = useAuth();
+  const navigate = useNavigate();
+
+  const { data: profile } = useQuery({
+    queryKey: ["userProfile", user?.id],
+    queryFn: async () => {
+      if (!user?.id) return null;
+      return db.getUserProfile(user.id, user.email || "");
+    },
+    enabled: !!user?.id,
+  });
+
+  const handleLogout = async () => {
+    await signOut();
+    navigate({ to: "/" });
+  };
+
+  const metadata = user?.user_metadata || {};
+  const fullName = metadata.full_name || metadata.name || profile?.full_name || "";
+  const username = metadata.username || metadata.user_name || "";
+  const email = user?.email || metadata.email || "";
+
+  const displayName = fullName || username || email || "User";
+  const avatarUrl = metadata.avatar_url || metadata.picture || profile?.avatar_url || "";
+
   return (
     <header className="sticky top-0 z-40 border-b border-border/60 glass">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
@@ -27,17 +80,71 @@ function Nav() {
         <nav className="hidden items-center gap-8 text-sm font-medium text-muted-foreground md:flex">
           <a href="#features" className="hover:text-foreground transition">Features</a>
           <a href="#workflow" className="hover:text-foreground transition">How it works</a>
-          <a href="#pricing" className="hover:text-foreground transition">Pricing</a>
+          <Link to="/price" className="hover:text-foreground transition">Pricing</Link>
           <a href="#faq" className="hover:text-foreground transition">FAQ</a>
         </nav>
         <div className="flex items-center gap-2">
-          <Link to="/" className="hidden rounded-lg px-3.5 py-2 text-sm font-medium text-foreground hover:bg-secondary sm:inline-flex">
-            Sign in
-          </Link>
-          <Link to="/" className="inline-flex items-center gap-1.5 rounded-lg bg-foreground px-4 py-2 text-sm font-semibold text-background shadow-sm transition hover:opacity-90">
-            Analyze resume
-            <span aria-hidden>→</span>
-          </Link>
+          {loading ? (
+            <div className="h-8 w-8 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+          ) : user ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger className="flex items-center gap-2 rounded-full border border-border bg-card/60 px-3 py-1.5 text-sm font-medium text-foreground backdrop-blur hover:bg-secondary/80 focus:outline-none transition cursor-pointer select-none">
+                <Avatar className="h-6 w-6 border border-border/80">
+                  {avatarUrl && <AvatarImage src={avatarUrl} alt={displayName} />}
+                  <AvatarFallback className="bg-primary/10 text-primary font-bold text-[10px] flex items-center justify-center">
+                    {getInitials(displayName)}
+                  </AvatarFallback>
+                </Avatar>
+                <span className="max-w-[120px] truncate">{displayName}</span>
+                <span className="text-[10px] text-muted-foreground">▼</span>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-56 mt-1 border border-border bg-card shadow-lg rounded-xl">
+                <DropdownMenuLabel className="font-medium text-xs text-muted-foreground px-3 py-2">
+                  Account Settings
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator className="border-border/50" />
+                <DropdownMenuItem asChild className="rounded-lg hover:bg-secondary cursor-pointer">
+                  <Link to="/dashboard" className="w-full flex items-center px-3 py-2 text-sm text-foreground">
+                    Dashboard
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild className="rounded-lg hover:bg-secondary cursor-pointer">
+                  <Link to="/dashboard" className="w-full flex items-center px-3 py-2 text-sm text-foreground">
+                    Profile
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild className="rounded-lg hover:bg-secondary cursor-pointer">
+                  <Link to="/price" className="w-full flex items-center px-3 py-2 text-sm text-foreground">
+                    Subscription
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild className="rounded-lg hover:bg-secondary cursor-pointer">
+                  <Link to="/dashboard" className="w-full flex items-center px-3 py-2 text-sm text-foreground">
+                    Settings
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator className="border-border/50" />
+                <DropdownMenuItem
+                  onClick={handleLogout}
+                  className="rounded-lg text-red-500 hover:bg-red-500/10 cursor-pointer"
+                >
+                  <span className="w-full flex items-center px-3 py-2 text-sm font-medium">
+                    Logout
+                  </span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <>
+              <Link to="/login" className="hidden rounded-lg px-3.5 py-2 text-sm font-medium text-foreground hover:bg-secondary sm:inline-flex">
+                Sign in
+              </Link>
+              <Link to="/dashboard" className="inline-flex items-center gap-1.5 rounded-lg bg-foreground px-4 py-2 text-sm font-semibold text-background shadow-sm transition hover:opacity-90">
+                Get started
+                <span aria-hidden>→</span>
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </header>
@@ -45,6 +152,7 @@ function Nav() {
 }
 
 function Hero() {
+  const { user } = useAuth();
   return (
     <section className="relative overflow-hidden">
       <div className="absolute inset-0 bg-grid opacity-60 [mask-image:radial-gradient(ellipse_at_center,black,transparent_70%)]" />
@@ -68,15 +176,31 @@ function Hero() {
             Score your resume against any job description, surface missing keywords, and rewrite weak sections with AI — all in a single recruiter-grade dashboard.
           </p>
           <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <Link to="/" className="inline-flex h-12 items-center gap-2 rounded-xl bg-foreground px-6 text-sm font-semibold text-background shadow-[var(--shadow-elevated)] transition hover:opacity-90">
-              Analyze my resume
-              <span aria-hidden>→</span>
-            </Link>
-            <Link to="/" className="inline-flex h-12 items-center gap-2 rounded-xl border border-border bg-card px-6 text-sm font-semibold text-foreground transition hover:bg-secondary">
-              View demo report
-            </Link>
+            {user ? (
+              <>
+                <Link to="/dashboard" className="inline-flex h-12 items-center gap-2 rounded-xl bg-foreground px-6 text-sm font-semibold text-background shadow-[var(--shadow-elevated)] transition hover:opacity-90">
+                  Go to Dashboard
+                  <span aria-hidden>→</span>
+                </Link>
+                <Link to="/dashboard/analyze" className="inline-flex h-12 items-center gap-2 rounded-xl border border-border bg-card px-6 text-sm font-semibold text-foreground transition hover:bg-secondary">
+                  Analyze resume
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link to="/dashboard/analyze" className="inline-flex h-12 items-center gap-2 rounded-xl bg-foreground px-6 text-sm font-semibold text-background shadow-[var(--shadow-elevated)] transition hover:opacity-90">
+                  Analyze my resume
+                  <span aria-hidden>→</span>
+                </Link>
+                <Link to="/dashboard" className="inline-flex h-12 items-center gap-2 rounded-xl border border-border bg-card px-6 text-sm font-semibold text-foreground transition hover:bg-secondary">
+                  View dashboard
+                </Link>
+              </>
+            )}
           </div>
-          <p className="mt-4 text-xs text-muted-foreground">Free tier · No credit card required · 1 scan / day</p>
+          {!user && (
+            <p className="mt-4 text-xs text-muted-foreground">Free tier · No credit card required · 1 scan / day</p>
+          )}
         </div>
 
         <div className="relative mx-auto mt-16 max-w-6xl">
@@ -274,6 +398,20 @@ function Workflow() {
 }
 
 function Pricing() {
+  const { user } = useAuth();
+  const navigate = useNavigate();
+
+  const { data: subscription } = useQuery({
+    queryKey: ["userSubscription", user?.id],
+    queryFn: async () => {
+      if (!user?.id) return null;
+      return db.getUserSubscription(user.id);
+    },
+    enabled: !!user?.id,
+  });
+
+  const isPremium = subscription?.plan_type === "premium";
+
   return (
     <section id="pricing" className="mx-auto max-w-7xl px-6 py-24">
       <div className="mx-auto max-w-2xl text-center">
@@ -288,8 +426,9 @@ function Pricing() {
           price="₹0"
           period="forever"
           features={["1 ATS scan per day", "Basic ATS analysis", "Limited suggestions", "Standard PDF export"]}
-          cta="Get started"
+          cta={user ? "Go to Dashboard" : "Get started"}
           highlight={false}
+          onClick={() => navigate({ to: "/dashboard" })}
         />
         <PlanCard
           name="Premium"
@@ -305,8 +444,9 @@ function Pricing() {
             "Email-delivered reports",
             "Advanced analytics dashboard",
           ]}
-          cta="Upgrade to Premium"
-          highlight
+          cta={isPremium ? "Premium Active" : "Upgrade to Premium"}
+          highlight={true}
+          onClick={() => navigate({ to: "/price" })}
         />
       </div>
     </section>
@@ -314,8 +454,8 @@ function Pricing() {
 }
 
 function PlanCard({
-  name, price, period, features, cta, highlight,
-}: { name: string; price: string; period: string; features: string[]; cta: string; highlight: boolean }) {
+  name, price, period, features, cta, highlight, onClick,
+}: { name: string; price: string; period: string; features: string[]; cta: string; highlight: boolean; onClick?: () => void }) {
   return (
     <div className={`relative rounded-2xl border p-8 ${highlight ? "border-foreground bg-foreground text-background shadow-[var(--shadow-elevated)]" : "border-border bg-card"}`}>
       {highlight && (
@@ -338,7 +478,7 @@ function PlanCard({
           </li>
         ))}
       </ul>
-      <button className={`mt-8 w-full rounded-xl px-5 py-3 text-sm font-semibold transition ${highlight ? "bg-background text-foreground hover:opacity-90" : "border border-foreground bg-card text-foreground hover:bg-secondary"}`}>
+      <button onClick={onClick} className={`mt-8 w-full rounded-xl px-5 py-3 text-sm font-semibold transition ${highlight ? "bg-background text-foreground hover:opacity-90" : "border border-foreground bg-card text-foreground hover:bg-secondary"} cursor-pointer`}>
         {cta}
       </button>
     </div>
@@ -373,6 +513,7 @@ function FAQ() {
 }
 
 function CTA() {
+  const { user } = useAuth();
   return (
     <section className="mx-auto max-w-7xl px-6 py-24">
       <div className="relative overflow-hidden rounded-3xl border border-border bg-foreground p-12 text-background lg:p-16">
@@ -380,18 +521,29 @@ function CTA() {
         <div className="absolute -bottom-32 -left-10 h-72 w-72 rounded-full opacity-20" style={{ background: "radial-gradient(circle, var(--teal), transparent 70%)" }} />
         <div className="relative max-w-2xl">
           <h2 className="font-display text-4xl font-bold tracking-tight sm:text-5xl">
-            Forge potential. Build futures.
+            {user ? "Ready to optimize more resumes?" : "Forge potential. Build futures."}
           </h2>
           <p className="mt-4 text-lg text-background/70">
-            Join thousands of candidates landing interviews with TalentForge AI.
+            {user
+              ? "Access your candidate dashboard to analyze new resumes or track your improvement trends."
+              : "Join thousands of candidates landing interviews with TalentForge AI."}
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <Link to="/" className="inline-flex h-12 items-center gap-2 rounded-xl bg-background px-6 text-sm font-semibold text-foreground transition hover:opacity-90">
-              Analyze my resume
-            </Link>
-            <Link to="/" className="inline-flex h-12 items-center rounded-xl border border-background/20 px-6 text-sm font-semibold text-background transition hover:bg-background/10">
-              Talk to sales
-            </Link>
+            {user ? (
+              <Link to="/dashboard" className="inline-flex h-12 items-center gap-2 rounded-xl bg-background px-6 text-sm font-semibold text-foreground transition hover:opacity-90">
+                Go to Dashboard
+                <span aria-hidden>→</span>
+              </Link>
+            ) : (
+              <>
+                <Link to="/dashboard/analyze" className="inline-flex h-12 items-center gap-2 rounded-xl bg-background px-6 text-sm font-semibold text-foreground transition hover:opacity-90">
+                  Analyze my resume
+                </Link>
+                <Link to="/price" className="inline-flex h-12 items-center rounded-xl border border-background/20 px-6 text-sm font-semibold text-background transition hover:bg-background/10">
+                  View pricing
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </div>

@@ -75,27 +75,68 @@ Preview the production build locally:
 npm run preview
 ```
 
-## 📁 Project Structure
+## 📁 Detailed Project Structure
 
-```
+```text
 recruit-optimize-ai/
+├── supabase/                  # Supabase custom migrations, seed scripts & DB schemas
 ├── src/
-│   ├── components/         # Reusable UI components
-│   │   └── ui/            # Radix UI component wrappers
-│   ├── hooks/             # Custom React hooks
-│   ├── lib/               # Utility functions & helpers
-│   ├── routes/            # Page components & routing
-│   ├── assets/            # Images and static files
-│   ├── client.tsx         # Client entry point
-│   ├── styles.css         # Global styles & Tailwind
-│   └── router.tsx         # Router configuration
-├── index.html             # HTML entry point
-├── vite.config.ts         # Vite configuration
-├── tsconfig.json          # TypeScript configuration
-├── tailwind.config.ts     # Tailwind CSS configuration
-├── eslint.config.js       # ESLint configuration
-├── package.json           # Dependencies & scripts
-└── README.md              # This file
+│   ├── assets/                # Static assets, branding files & logos
+│   │   └── talentforge-logo.png
+│   ├── components/            # Reusable React components
+│   │   ├── auth/              # Form boundaries, oauth helpers & auth layout templates
+│   │   │   ├── auth-divider.tsx
+│   │   │   ├── auth-page-layout.tsx
+│   │   │   └── google-sign-in-button.tsx
+│   │   ├── ui/                # shadcn / Radix UI accessible styled primitives
+│   │   │   ├── accordion.tsx  # Collapsible FAQs accordion list
+│   │   │   ├── alert-dialog.tsx
+│   │   │   ├── alert.tsx
+│   │   │   ├── avatar.tsx     # Initials fallback & URL user photo shell
+│   │   │   ├── card.tsx
+│   │   │   ├── dropdown-menu.tsx # Radix dropdown trigger overlay wrapper
+│   │   │   ├── form.tsx       # Schema forms helper (uses react-hook-form)
+│   │   │   ├── input.tsx
+│   │   │   ├── sidebar.tsx    # Dashboard core navigation panel
+│   │   │   └── sonner.tsx     # Toast notification dispatcher
+│   │   ├── config-warning-banner.tsx  # Dynamic validation banner for API credentials
+│   │   └── global-error-boundary.tsx # Fallback view for catching React runtimes crashes
+│   ├── contexts/
+│   │   └── auth-context.tsx   # Singleton AuthProvider state (Supabase PKCE Auth Context)
+│   ├── hooks/
+│   │   └── use-mobile.tsx     # Window width dimension tracking hook
+│   ├── lib/
+│   │   ├── db.ts              # Unified Database actions + automatic LocalStorage simulation fallbacks
+│   │   ├── error-capture.ts   # Client-side exception tracing logs helper
+│   │   ├── gemini.ts          # Google Gemini 2.5 Flash SDK prompt schemas & mock fallbacks
+│   │   ├── resumeParser.ts    # Web Worker-based PDF.js client text extractor CDN loading
+│   │   ├── supabase.ts        # Supabase Client setup, persistence config, and oauth triggers
+│   │   └── utils.ts           # Classnames utility (Tailwind CSS parser/merger)
+│   ├── routes/                # Page route views (TanStack router files)
+│   │   ├── auth/
+│   │   │   └── callback.tsx   # OAuth redirect handler (PKCE verifier receiver)
+│   │   ├── dashboard/         # Protected candidates features
+│   │   │   ├── admin.tsx      # Admin stats panel and payment logs review
+│   │   │   ├── analyze.tsx    # File dropzone & JD text input comparator
+│   │   │   ├── history.tsx    # Scoring version histories & optimization deltas list
+│   │   │   ├── index.tsx      # Candidate home dashboard portal index
+│   │   │   └── report.$reportId.tsx # Dynamic interactive ATS keyword scoring report
+│   │   ├── __root.tsx         # Root meta layout loaders
+│   │   ├── dashboard.tsx      # Protected route session-checking wrapper layout
+│   │   ├── index.tsx          # Main Landing Page containing header Nav & CTAs
+│   │   ├── login.tsx          # User credential auth page
+│   │   ├── price.tsx          # Pricing subscription upgrades & Razorpay handler
+│   │   └── signup.tsx         # Account registration page
+│   ├── client.tsx             # Application entry loader (React strict DOM mounting)
+│   ├── router.tsx             # Router setup configuration
+│   ├── server.ts              # Server-side setup outline
+│   └── styles.css             # Theme colors, glassmorphism tokens, and fonts
+├── index.html                 # Index page DOM parent shell
+├── vite.config.ts             # Vite configuration using Tailwind CSS v4 compiler
+├── tsconfig.json              # TypeScript compilation rules
+├── eslint.config.js           # Lint code guidelines
+├── package.json               # Development scripts & project dependencies
+└── README.md                  # Detailed documentation guide
 ```
 
 ## 📝 Available Scripts

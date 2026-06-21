@@ -56,15 +56,15 @@ function DashboardHome() {
     return (
       <div className="space-y-8 animate-pulse">
         <div className="flex flex-col gap-2">
-          <div className="h-8 w-48 rounded bg-zinc-800" />
-          <div className="h-4 w-72 rounded bg-zinc-800" />
+          <div className="h-8 w-48 rounded bg-secondary/40" />
+          <div className="h-4 w-72 rounded bg-secondary/40" />
         </div>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
           {[...Array(5)].map((_, i) => (
-            <div key={i} className="h-28 rounded-xl bg-zinc-800" />
+            <div key={i} className="h-28 rounded-xl bg-secondary/40" />
           ))}
         </div>
-        <div className="h-80 rounded-xl bg-zinc-800" />
+        <div className="h-80 rounded-xl bg-secondary/40" />
       </div>
     );
   }
@@ -100,10 +100,10 @@ function DashboardHome() {
       {/* Welcome header */}
       <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
         <div>
-          <h1 className="font-display text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
+          <h1 className="font-display text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl">
             Audit Workspace
           </h1>
-          <p className="mt-1 text-sm text-zinc-400">
+          <p className="mt-1 text-sm text-muted-foreground">
             Analyze resumes against applicant tracking systems and optimize outcomes.
           </p>
         </div>
@@ -123,15 +123,15 @@ function DashboardHome() {
           return (
             <div
               key={stat.label}
-              className="relative overflow-hidden rounded-2xl border border-zinc-800/80 bg-[#0d0d10] p-5 shadow-sm"
+              className="relative overflow-hidden rounded-2xl border border-border bg-card p-5 shadow-sm"
             >
               <div className="flex justify-between items-start">
-                <span className="text-xs font-semibold uppercase tracking-wider text-zinc-500">
+                <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
                   {stat.label}
                 </span>
                 <Icon size={18} style={{ color: stat.color }} />
               </div>
-              <div className="mt-4 font-display text-2xl font-bold text-white tabular-nums">
+              <div className="mt-4 font-display text-2xl font-bold text-foreground tabular-nums">
                 {stat.value}
               </div>
             </div>
@@ -139,9 +139,9 @@ function DashboardHome() {
         })}
 
         {/* Subscription Status Widget */}
-        <div className="relative overflow-hidden rounded-2xl border border-[#B8924A]/20 bg-[#17140f] p-5 shadow-sm">
+        <div className="relative overflow-hidden rounded-2xl border border-[#B8924A]/20 bg-[color:var(--gold)]/10 p-5 shadow-sm">
           <div className="flex justify-between items-start">
-            <span className="text-xs font-semibold uppercase tracking-wider text-[#e6c17e]">
+            <span className="text-xs font-semibold uppercase tracking-wider text-[#B8924A]">
               Plan Tier
             </span>
             <Crown size={18} className="text-[#B8924A]" />
@@ -153,12 +153,14 @@ function DashboardHome() {
             {planType === "free" ? (
               <Link
                 to="/price"
-                className="text-[11px] font-semibold text-[#e6c17e] hover:underline flex items-center gap-0.5"
+                className="text-[11px] font-semibold text-[#B8924A] hover:underline flex items-center gap-0.5"
               >
                 Upgrade to Premium <ChevronRight size={10} />
               </Link>
             ) : (
-              <span className="text-[11px] font-medium text-zinc-400">Unlimited scans active</span>
+              <span className="text-[11px] font-medium text-muted-foreground">
+                Unlimited scans active
+              </span>
             )}
           </div>
         </div>
@@ -166,19 +168,19 @@ function DashboardHome() {
 
       {totalScans === 0 ? (
         /* Empty State */
-        <div className="rounded-3xl border border-zinc-800/60 bg-[#0d0d10]/40 p-12 text-center backdrop-blur-sm">
-          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-zinc-900 border border-zinc-800/60 text-zinc-500 mb-5">
+        <div className="rounded-3xl border border-border bg-card/40 p-12 text-center backdrop-blur-sm">
+          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-secondary border border-border text-muted-foreground mb-5">
             <FileText size={26} />
           </div>
-          <h2 className="font-display text-xl font-bold text-white">No scans analyzed yet</h2>
-          <p className="mx-auto mt-2 max-w-sm text-sm text-zinc-400">
+          <h2 className="font-display text-xl font-bold text-foreground">No scans analyzed yet</h2>
+          <p className="mx-auto mt-2 max-w-sm text-sm text-muted-foreground">
             Upload your first resume PDF and paste a job description to get score feedback and AI
             rewriting.
           </p>
           <div className="mt-6">
             <Link
               to="/dashboard/analyze"
-              className="inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-white px-5 text-sm font-semibold text-black transition hover:bg-zinc-100"
+              className="inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-foreground px-5 text-sm font-semibold text-background transition hover:opacity-90"
             >
               Analyze Resume Now
             </Link>
@@ -188,10 +190,12 @@ function DashboardHome() {
         /* Charts & History */
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
           {/* Trends Chart */}
-          <div className="rounded-2xl border border-zinc-800/60 bg-[#0d0d10] p-6 lg:col-span-2">
+          <div className="rounded-2xl border border-border bg-card p-6 lg:col-span-2">
             <div className="flex flex-col gap-1 mb-6">
-              <h2 className="font-display text-lg font-bold text-white">Performance Analytics</h2>
-              <p className="text-xs text-zinc-400">
+              <h2 className="font-display text-lg font-bold text-foreground">
+                Performance Analytics
+              </h2>
+              <p className="text-xs text-muted-foreground">
                 Track score changes and metrics over consecutive scans.
               </p>
             </div>
@@ -208,15 +212,23 @@ function DashboardHome() {
                       <stop offset="95%" stopColor="#2A8F8B" stopOpacity={0} />
                     </linearGradient>
                   </defs>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#27272a" vertical={false} />
-                  <XAxis dataKey="name" stroke="#52525b" tickLine={false} />
-                  <YAxis domain={[0, 100]} stroke="#52525b" tickLine={false} />
+                  <CartesianGrid
+                    strokeDasharray="3 3"
+                    stroke="var(--color-border)"
+                    vertical={false}
+                  />
+                  <XAxis dataKey="name" stroke="var(--color-muted-foreground)" tickLine={false} />
+                  <YAxis
+                    domain={[0, 100]}
+                    stroke="var(--color-muted-foreground)"
+                    tickLine={false}
+                  />
                   <Tooltip
                     contentStyle={{
-                      backgroundColor: "#0f0f12",
-                      borderColor: "#27272a",
+                      backgroundColor: "var(--color-card)",
+                      borderColor: "var(--color-border)",
                       borderRadius: "12px",
-                      color: "#f4f4f5",
+                      color: "var(--color-foreground)",
                     }}
                   />
                   <Legend iconType="circle" wrapperStyle={{ paddingTop: "15px" }} />
@@ -242,15 +254,17 @@ function DashboardHome() {
           </div>
 
           {/* Recent Audits Table */}
-          <div className="rounded-2xl border border-zinc-800/60 bg-[#0d0d10] p-6 flex flex-col">
+          <div className="rounded-2xl border border-border bg-card p-6 flex flex-col">
             <div className="flex justify-between items-center mb-6">
               <div>
-                <h2 className="font-display text-lg font-bold text-white">Recent Analyses</h2>
-                <p className="text-xs text-zinc-400">Review scores for recent job applications.</p>
+                <h2 className="font-display text-lg font-bold text-foreground">Recent Analyses</h2>
+                <p className="text-xs text-muted-foreground">
+                  Review scores for recent job applications.
+                </p>
               </div>
               <Link
                 to="/dashboard/history"
-                className="text-xs font-semibold text-[#e6c17e] hover:underline"
+                className="text-xs font-semibold text-[#B8924A] hover:underline"
               >
                 View all
               </Link>
@@ -263,13 +277,13 @@ function DashboardHome() {
                 .map((report) => (
                   <div
                     key={report.id}
-                    className="flex items-center justify-between rounded-xl border border-zinc-800/40 bg-zinc-900/10 p-3 hover:bg-zinc-900/30 transition duration-200"
+                    className="flex items-center justify-between rounded-xl border border-border/40 bg-secondary/10 p-3 hover:bg-secondary/30 transition duration-200"
                   >
                     <div className="min-w-0 pr-2">
-                      <h3 className="text-xs font-bold text-zinc-200 truncate">
+                      <h3 className="text-xs font-bold text-foreground truncate">
                         {report.job_title}
                       </h3>
-                      <div className="flex items-center gap-1.5 mt-1 text-[10px] text-zinc-400">
+                      <div className="flex items-center gap-1.5 mt-1 text-[10px] text-muted-foreground">
                         <Calendar size={10} />
                         {new Date(report.created_at).toLocaleDateString(undefined, {
                           month: "short",
@@ -280,7 +294,7 @@ function DashboardHome() {
                     </div>
                     <div className="flex items-center gap-3 shrink-0">
                       <div className="text-right">
-                        <div className="text-xs font-extrabold text-white">
+                        <div className="text-xs font-extrabold text-foreground">
                           {report.ats_score} ATS
                         </div>
                         <div className="text-[10px] font-semibold text-[#2A8F8B]">
@@ -289,7 +303,7 @@ function DashboardHome() {
                       </div>
                       <Link
                         to={`/dashboard/report/${report.id}`}
-                        className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-300 hover:text-white transition"
+                        className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-secondary hover:bg-secondary/80 text-foreground transition"
                       >
                         <ChevronRight size={14} />
                       </Link>

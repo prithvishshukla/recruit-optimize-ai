@@ -185,23 +185,25 @@ function PricingPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#09090b] text-zinc-100 antialiased font-sans selection:bg-[#B8924A]/30">
+    <div className="min-h-screen bg-background text-foreground antialiased font-sans selection:bg-[#B8924A]/30">
       {/* Top Navigation */}
-      <header className="sticky top-0 z-40 border-b border-zinc-900/60 bg-[#09090b]/85 backdrop-blur-md">
+      <header className="sticky top-0 z-40 border-b border-border/60 bg-background/85 backdrop-blur-md">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
           <Link to="/" className="flex items-center gap-2">
             <div className="h-7 w-7 rounded-lg bg-[#B8924A] flex items-center justify-center font-bold text-black text-sm">
               T
             </div>
             <div className="flex flex-col leading-none">
-              <span className="text-[15px] font-bold text-white tracking-tight">TalentForge</span>
+              <span className="text-[15px] font-bold text-foreground tracking-tight">
+                TalentForge
+              </span>
               <span className="text-[9px] uppercase tracking-wider text-[#B8924A]">ATS AI</span>
             </div>
           </Link>
           <div className="flex items-center gap-4">
             <Link
               to="/dashboard"
-              className="text-sm font-medium text-zinc-400 hover:text-white transition"
+              className="text-sm font-medium text-muted-foreground hover:text-foreground transition"
             >
               Go to Dashboard
             </Link>
@@ -212,13 +214,13 @@ function PricingPage() {
       {/* Main Pricing Section */}
       <main className="mx-auto max-w-7xl px-6 py-20 lg:py-28 text-center space-y-16">
         <div className="mx-auto max-w-3xl space-y-4">
-          <div className="inline-flex items-center gap-2 rounded-full border border-[#B8924A]/20 bg-[#B8924A]/5 px-3 py-1 text-xs font-semibold text-[#e6c17e]">
+          <div className="inline-flex items-center gap-2 rounded-full border border-[#B8924A]/20 bg-[#B8924A]/5 px-3 py-1 text-xs font-semibold text-[#B8924A]">
             <Zap size={12} className="text-[#B8924A]" /> Pricing Plans
           </div>
-          <h1 className="font-display text-4xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl">
+          <h1 className="font-display text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
             Audit without constraints.
           </h1>
-          <p className="mx-auto max-w-xl text-sm leading-relaxed text-zinc-400">
+          <p className="mx-auto max-w-xl text-sm leading-relaxed text-muted-foreground">
             Improve your interviews chances with unlimited evaluations, section optimizations, and
             progress history comparison tools.
           </p>
@@ -227,20 +229,20 @@ function PricingPage() {
         {/* Pricing Cards Grid */}
         <div className="mx-auto grid max-w-4xl gap-6 md:grid-cols-2 text-left">
           {/* Free Plan */}
-          <div className="rounded-3xl border border-zinc-800 bg-[#0d0d10] p-8 flex flex-col justify-between">
+          <div className="rounded-3xl border border-border bg-card p-8 flex flex-col justify-between">
             <div className="space-y-6">
               <div>
-                <span className="text-xs font-semibold uppercase tracking-wider text-zinc-500">
+                <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
                   Free Tier
                 </span>
-                <div className="mt-2 font-display text-4xl font-extrabold text-white">₹0</div>
-                <p className="mt-1 text-xs text-zinc-500">Basic audit capabilities</p>
+                <div className="mt-2 font-display text-4xl font-extrabold text-foreground">₹0</div>
+                <p className="mt-1 text-xs text-muted-foreground">Basic audit capabilities</p>
               </div>
 
-              <ul className="space-y-3.5 text-xs text-zinc-300">
+              <ul className="space-y-3.5 text-xs text-foreground">
                 {freeFeatures.map((f) => (
                   <li key={f} className="flex items-center gap-2.5">
-                    <CheckCircle size={14} className="text-zinc-500 shrink-0" />
+                    <CheckCircle size={14} className="text-muted-foreground shrink-0" />
                     <span>{f}</span>
                   </li>
                 ))}
@@ -250,7 +252,7 @@ function PricingPage() {
             <div className="mt-8">
               <Link
                 to="/dashboard"
-                className="flex h-11 w-full items-center justify-center rounded-xl border border-zinc-800 bg-zinc-900/40 text-xs font-semibold text-zinc-300 hover:text-white transition"
+                className="flex h-11 w-full items-center justify-center rounded-xl border border-border bg-secondary/50 text-xs font-semibold text-foreground hover:bg-secondary transition"
               >
                 {planType === "free" ? "Active Plan" : "Downgrade is restricted"}
               </Link>
@@ -258,21 +260,21 @@ function PricingPage() {
           </div>
 
           {/* Premium Plan */}
-          <div className="relative rounded-3xl border border-[#B8924A] bg-[#121114] p-8 flex flex-col justify-between shadow-2xl">
+          <div className="relative rounded-3xl border border-[#B8924A] bg-card p-8 flex flex-col justify-between shadow-2xl">
             <span className="absolute -top-3 right-6 rounded-full bg-[#B8924A] px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-black">
               Recommended
             </span>
 
             <div className="space-y-6">
               <div>
-                <span className="text-xs font-semibold uppercase tracking-wider text-[#e6c17e]">
+                <span className="text-xs font-semibold uppercase tracking-wider text-[#B8924A]">
                   Premium Access
                 </span>
                 <div className="mt-2 font-display text-4xl font-extrabold text-[#B8924A]">₹49</div>
-                <p className="mt-1 text-xs text-[#e6c17e]/80">Per user / month</p>
+                <p className="mt-1 text-xs text-[#B8924A]/80">Per user / month</p>
               </div>
 
-              <ul className="space-y-3.5 text-xs text-zinc-300">
+              <ul className="space-y-3.5 text-xs text-foreground">
                 {premiumFeatures.map((f) => (
                   <li key={f} className="flex items-center gap-2.5">
                     <CheckCircle size={14} className="text-[#B8924A] shrink-0" />
@@ -284,14 +286,14 @@ function PricingPage() {
 
             <div className="mt-8">
               {planType === "premium" ? (
-                <div className="flex h-11 w-full items-center justify-center rounded-xl bg-zinc-800 text-xs font-semibold text-zinc-400">
+                <div className="flex h-11 w-full items-center justify-center rounded-xl bg-secondary text-xs font-semibold text-muted-foreground">
                   Premium Active
                 </div>
               ) : (
                 <button
                   onClick={handleUpgrade}
                   disabled={upgrading}
-                  className="flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-white text-black font-semibold text-xs hover:bg-zinc-100 transition active:scale-[0.98]"
+                  className="flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-[#B8924A] text-black font-bold text-xs hover:bg-[#B8924A]/90 transition active:scale-[0.98]"
                 >
                   {upgrading ? "Loading payment gateway..." : "Upgrade to Premium"}
                   <ArrowRight size={14} />
@@ -303,14 +305,14 @@ function PricingPage() {
 
         {/* Simulation Modal / Warning */}
         {simulating && (
-          <div className="mx-auto max-w-md rounded-2xl border border-[#B8924A]/30 bg-[#17140f] p-6 text-center shadow-lg">
+          <div className="mx-auto max-w-md rounded-2xl border border-[#B8924A]/30 bg-card p-6 text-center shadow-lg">
             <div className="mx-auto flex h-10 w-10 items-center justify-center rounded-xl bg-[#B8924A]/10 text-[#B8924A] mb-4">
               <CreditCard size={18} />
             </div>
-            <h3 className="font-display text-sm font-bold text-white">Razorpay Key Missing</h3>
-            <p className="mt-1.5 text-xs text-zinc-400 leading-relaxed">
+            <h3 className="font-display text-sm font-bold text-foreground">Razorpay Key Missing</h3>
+            <p className="mt-1.5 text-xs text-muted-foreground leading-relaxed">
               No public Razorpay API key (
-              <code className="rounded bg-zinc-900 px-1 py-0.5 font-mono text-zinc-200">
+              <code className="rounded bg-secondary px-1 py-0.5 font-mono text-foreground">
                 VITE_RAZORPAY_KEY_ID
               </code>
               ) is set in your env. You can simulate a successful upgrade to test the Premium
@@ -325,7 +327,7 @@ function PricingPage() {
               </button>
               <button
                 onClick={() => setSimulating(false)}
-                className="inline-flex h-9 items-center justify-center rounded-lg border border-zinc-800 bg-zinc-950 px-4 text-xs font-semibold text-zinc-400 hover:text-white transition"
+                className="inline-flex h-9 items-center justify-center rounded-lg border border-border bg-secondary px-4 text-xs font-semibold text-muted-foreground hover:text-foreground transition"
               >
                 Cancel
               </button>

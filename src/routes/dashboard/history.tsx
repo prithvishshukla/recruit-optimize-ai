@@ -83,9 +83,9 @@ function HistoryPage() {
   if (reportsLoading) {
     return (
       <div className="space-y-8 animate-pulse">
-        <div className="h-10 w-64 bg-zinc-800 rounded" />
-        <div className="h-44 bg-zinc-800 rounded-2xl" />
-        <div className="h-80 bg-zinc-800 rounded-2xl" />
+        <div className="h-10 w-64 bg-secondary/40 rounded" />
+        <div className="h-44 bg-secondary/40 rounded-2xl" />
+        <div className="h-80 bg-secondary/40 rounded-2xl" />
       </div>
     );
   }
@@ -94,28 +94,28 @@ function HistoryPage() {
     <div className="space-y-10">
       {/* Header */}
       <div>
-        <h1 className="font-display text-3xl font-extrabold tracking-tight text-white">
+        <h1 className="font-display text-3xl font-extrabold tracking-tight text-foreground">
           Version History
         </h1>
-        <p className="mt-1 text-sm text-zinc-400">
+        <p className="mt-1 text-sm text-muted-foreground">
           Track adjustments, compare resume versions, and audit score progress.
         </p>
       </div>
 
       {reports.length === 0 ? (
         /* Empty state */
-        <div className="rounded-3xl border border-zinc-800 bg-[#0d0d10] p-12 text-center">
-          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-zinc-900 border border-zinc-800 text-zinc-500 mb-5">
+        <div className="rounded-3xl border border-border bg-card p-12 text-center">
+          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-secondary border border-border text-muted-foreground mb-5">
             <History size={26} />
           </div>
-          <h2 className="font-display text-xl font-bold text-white">No history record</h2>
-          <p className="mx-auto mt-2 max-w-sm text-sm text-zinc-400">
+          <h2 className="font-display text-xl font-bold text-foreground">No history record</h2>
+          <p className="mx-auto mt-2 max-w-sm text-sm text-muted-foreground">
             Audit your resume first to populate scan version records.
           </p>
           <div className="mt-6">
             <Link
               to="/dashboard/analyze"
-              className="inline-flex h-11 items-center justify-center rounded-xl bg-white px-5 text-sm font-semibold text-black transition hover:bg-zinc-100"
+              className="inline-flex h-11 items-center justify-center rounded-xl bg-[#B8924A] px-5 text-sm font-semibold text-black transition hover:bg-[#B8924A]/90"
             >
               Start Analysis
             </Link>
@@ -125,20 +125,20 @@ function HistoryPage() {
         <>
           {/* Version comparison card */}
           {reports.length >= 2 && (
-            <div className="rounded-2xl border border-zinc-800 bg-[#0d0d10] p-6 space-y-6">
+            <div className="rounded-2xl border border-border bg-card p-6 space-y-6">
               <div className="flex flex-col gap-1">
-                <h2 className="font-display text-lg font-bold text-white flex items-center gap-2">
+                <h2 className="font-display text-lg font-bold text-foreground flex items-center gap-2">
                   <Sparkles size={18} className="text-[#B8924A]" />
                   Resume Version Comparison
                 </h2>
-                <p className="text-xs text-zinc-400">
+                <p className="text-xs text-muted-foreground">
                   Select two historical audit reports to track score changes and keyword shifts.
                 </p>
               </div>
 
               <form onSubmit={handleCompare} className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div className="space-y-1">
-                  <label className="text-[10px] font-semibold uppercase tracking-wider text-zinc-500">
+                  <label className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
                     Base Version (Before)
                   </label>
                   <select
@@ -147,7 +147,7 @@ function HistoryPage() {
                       setCompareA(e.target.value);
                       setIsComparing(false);
                     }}
-                    className="h-11 w-full rounded-xl border border-zinc-800 bg-zinc-950 px-4 text-xs text-white focus:border-[#B8924A] focus:outline-none"
+                    className="h-11 w-full rounded-xl border border-border bg-background px-4 text-xs text-foreground focus:border-[#B8924A] focus:outline-none"
                   >
                     <option value="">Select baseline scan</option>
                     {reports.map((r) => (
@@ -160,7 +160,7 @@ function HistoryPage() {
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-[10px] font-semibold uppercase tracking-wider text-zinc-500">
+                  <label className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
                     Target Version (After)
                   </label>
                   <select
@@ -169,7 +169,7 @@ function HistoryPage() {
                       setCompareB(e.target.value);
                       setIsComparing(false);
                     }}
-                    className="h-11 w-full rounded-xl border border-zinc-800 bg-zinc-950 px-4 text-xs text-white focus:border-[#B8924A] focus:outline-none"
+                    className="h-11 w-full rounded-xl border border-border bg-background px-4 text-xs text-foreground focus:border-[#B8924A] focus:outline-none"
                   >
                     <option value="">Select optimized scan</option>
                     {reports.map((r) => (
@@ -184,7 +184,7 @@ function HistoryPage() {
                 <button
                   type="submit"
                   disabled={!compareA || !compareB}
-                  className="h-11 self-end bg-white hover:bg-zinc-100 text-black font-semibold text-xs rounded-xl flex items-center justify-center gap-2 transition duration-200 active:scale-[0.98] disabled:bg-zinc-800 disabled:text-zinc-500 disabled:cursor-not-allowed"
+                  className="h-11 self-end bg-[#B8924A] hover:bg-[#B8924A]/90 text-black font-semibold text-xs rounded-xl flex items-center justify-center gap-2 transition duration-200 active:scale-[0.98] disabled:bg-secondary disabled:text-muted-foreground/50 disabled:cursor-not-allowed"
                 >
                   Compare Audits
                 </button>
@@ -192,26 +192,26 @@ function HistoryPage() {
 
               {/* Comparison Results */}
               {isComparing && deltas && reportA && reportB && (
-                <div className="border-t border-zinc-800/80 pt-6 space-y-6 animate-[fadeIn_0.3s_ease-out]">
+                <div className="border-t border-border/80 pt-6 space-y-6 animate-[fadeIn_0.3s_ease-out]">
                   {/* Scores Comparison */}
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     {/* ATS score delta */}
-                    <div className="rounded-xl border border-zinc-800/50 bg-zinc-900/10 p-4 flex justify-between items-center">
+                    <div className="rounded-xl border border-border bg-secondary/10 p-4 flex justify-between items-center">
                       <div>
-                        <span className="text-[10px] font-semibold uppercase tracking-wider text-zinc-500">
+                        <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
                           ATS Core Shift
                         </span>
-                        <div className="font-display text-lg font-bold text-white mt-1">
+                        <div className="font-display text-lg font-bold text-foreground mt-1">
                           {reportA.ats_score}{" "}
-                          <ArrowRight className="inline h-3.5 w-3.5 mx-1 text-zinc-400" />{" "}
+                          <ArrowRight className="inline h-3.5 w-3.5 mx-1 text-muted-foreground" />{" "}
                           {reportB.ats_score}
                         </div>
                       </div>
                       <span
                         className={`inline-flex rounded-full px-2.5 py-1 text-xs font-bold ${
                           deltas.scoreDelta >= 0
-                            ? "bg-green-500/10 text-green-400"
-                            : "bg-red-500/10 text-red-400"
+                            ? "bg-green-500/10 text-green-600"
+                            : "bg-red-500/10 text-red-600"
                         }`}
                       >
                         {deltas.scoreDelta >= 0 ? `+${deltas.scoreDelta}` : deltas.scoreDelta}
@@ -219,22 +219,22 @@ function HistoryPage() {
                     </div>
 
                     {/* JD Match delta */}
-                    <div className="rounded-xl border border-zinc-800/50 bg-zinc-900/10 p-4 flex justify-between items-center">
+                    <div className="rounded-xl border border-border bg-secondary/10 p-4 flex justify-between items-center">
                       <div>
-                        <span className="text-[10px] font-semibold uppercase tracking-wider text-zinc-500">
+                        <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
                           JD Match Shift
                         </span>
-                        <div className="font-display text-lg font-bold text-white mt-1">
+                        <div className="font-display text-lg font-bold text-foreground mt-1">
                           {reportA.jd_match}%{" "}
-                          <ArrowRight className="inline h-3.5 w-3.5 mx-1 text-zinc-400" />{" "}
+                          <ArrowRight className="inline h-3.5 w-3.5 mx-1 text-muted-foreground" />{" "}
                           {reportB.jd_match}%
                         </div>
                       </div>
                       <span
                         className={`inline-flex rounded-full px-2.5 py-1 text-xs font-bold ${
                           deltas.matchDelta >= 0
-                            ? "bg-green-500/10 text-green-400"
-                            : "bg-red-500/10 text-red-400"
+                            ? "bg-green-500/10 text-green-600"
+                            : "bg-red-500/10 text-red-600"
                         }`}
                       >
                         {deltas.matchDelta >= 0 ? `+${deltas.matchDelta}` : deltas.matchDelta}
@@ -242,22 +242,22 @@ function HistoryPage() {
                     </div>
 
                     {/* Health delta */}
-                    <div className="rounded-xl border border-zinc-800/50 bg-zinc-900/10 p-4 flex justify-between items-center">
+                    <div className="rounded-xl border border-border bg-secondary/10 p-4 flex justify-between items-center">
                       <div>
-                        <span className="text-[10px] font-semibold uppercase tracking-wider text-zinc-500">
+                        <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
                           Resume Health Shift
                         </span>
-                        <div className="font-display text-lg font-bold text-white mt-1">
+                        <div className="font-display text-lg font-bold text-foreground mt-1">
                           {reportA.resume_health}{" "}
-                          <ArrowRight className="inline h-3.5 w-3.5 mx-1 text-zinc-400" />{" "}
+                          <ArrowRight className="inline h-3.5 w-3.5 mx-1 text-muted-foreground" />{" "}
                           {reportB.resume_health}
                         </div>
                       </div>
                       <span
                         className={`inline-flex rounded-full px-2.5 py-1 text-xs font-bold ${
                           deltas.healthDelta >= 0
-                            ? "bg-green-500/10 text-green-400"
-                            : "bg-red-500/10 text-red-400"
+                            ? "bg-green-500/10 text-green-600"
+                            : "bg-red-500/10 text-red-600"
                         }`}
                       >
                         {deltas.healthDelta >= 0 ? `+${deltas.healthDelta}` : deltas.healthDelta}
@@ -268,7 +268,7 @@ function HistoryPage() {
                   {/* Keyword updates */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {/* Added Keywords */}
-                    <div className="rounded-xl border border-zinc-800 bg-zinc-950/20 p-5 space-y-3">
+                    <div className="rounded-xl border border-border bg-secondary/10 p-5 space-y-3">
                       <span className="text-xs font-bold uppercase tracking-wider text-[#2A8F8B] flex items-center gap-1.5">
                         <Plus size={14} /> Added target keywords ({deltas.addedKeywords.length})
                       </span>
@@ -276,33 +276,37 @@ function HistoryPage() {
                         {deltas.addedKeywords.map((k) => (
                           <span
                             key={k}
-                            className="rounded border border-[#2A8F8B]/30 bg-[#2A8F8B]/5 px-2 py-1 text-[11px] font-medium text-[#2A8F8B]"
+                            className="rounded-lg border border-[#2A8F8B]/30 bg-[#2A8F8B]/5 px-2 py-1 text-[11px] font-medium text-[#2A8F8B]"
                           >
                             {k}
                           </span>
                         ))}
                         {deltas.addedKeywords.length === 0 && (
-                          <span className="text-xs text-zinc-500">No new keywords added.</span>
+                          <span className="text-xs text-muted-foreground">
+                            No new keywords added.
+                          </span>
                         )}
                       </div>
                     </div>
 
                     {/* Removed Keywords */}
-                    <div className="rounded-xl border border-zinc-800 bg-zinc-950/20 p-5 space-y-3">
-                      <span className="text-xs font-bold uppercase tracking-wider text-red-400 flex items-center gap-1.5">
+                    <div className="rounded-xl border border-border bg-secondary/10 p-5 space-y-3">
+                      <span className="text-xs font-bold uppercase tracking-wider text-red-500 flex items-center gap-1.5">
                         <Minus size={14} /> Removed keywords ({deltas.removedKeywords.length})
                       </span>
                       <div className="flex flex-wrap gap-1.5">
                         {deltas.removedKeywords.map((k) => (
                           <span
                             key={k}
-                            className="rounded border border-red-500/20 bg-red-500/5 px-2 py-1 text-[11px] font-medium text-red-400"
+                            className="rounded-lg border border-red-500/20 bg-red-500/5 px-2 py-1 text-[11px] font-medium text-red-500"
                           >
                             {k}
                           </span>
                         ))}
                         {deltas.removedKeywords.length === 0 && (
-                          <span className="text-xs text-zinc-500">No keywords removed.</span>
+                          <span className="text-xs text-muted-foreground">
+                            No keywords removed.
+                          </span>
                         )}
                       </div>
                     </div>
@@ -313,12 +317,14 @@ function HistoryPage() {
           )}
 
           {/* Full Audit List Table */}
-          <div className="rounded-2xl border border-zinc-800 bg-[#0d0d10] p-6">
-            <h2 className="font-display text-lg font-bold text-white mb-6">Historical Scans</h2>
+          <div className="rounded-2xl border border-border bg-card p-6">
+            <h2 className="font-display text-lg font-bold text-foreground mb-6">
+              Historical Scans
+            </h2>
             <div className="overflow-x-auto">
               <table className="w-full text-left text-sm">
                 <thead>
-                  <tr className="border-b border-zinc-800 pb-3 text-xs font-bold uppercase tracking-wider text-zinc-500">
+                  <tr className="border-b border-border pb-3 text-xs font-bold uppercase tracking-wider text-muted-foreground">
                     <th className="pb-3">Position / Job Title</th>
                     <th className="pb-3">Audit Date</th>
                     <th className="pb-3 text-center">ATS Score</th>
@@ -327,30 +333,30 @@ function HistoryPage() {
                     <th className="pb-3 text-right">Action</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-zinc-800/50">
+                <tbody className="divide-y divide-border/50">
                   {reports.map((report) => (
-                    <tr key={report.id} className="hover:bg-zinc-900/10 transition duration-150">
-                      <td className="py-4 font-semibold text-zinc-200">{report.job_title}</td>
-                      <td className="py-4 text-zinc-400">
+                    <tr key={report.id} className="hover:bg-secondary/30 transition duration-150">
+                      <td className="py-4 font-semibold text-foreground">{report.job_title}</td>
+                      <td className="py-4 text-muted-foreground">
                         {new Date(report.created_at).toLocaleDateString(undefined, {
                           month: "short",
                           day: "numeric",
                           year: "numeric",
                         })}
                       </td>
-                      <td className="py-4 text-center tabular-nums text-white font-semibold">
+                      <td className="py-4 text-center tabular-nums text-foreground font-semibold">
                         {report.ats_score}
                       </td>
                       <td className="py-4 text-center tabular-nums text-[#2A8F8B] font-semibold">
                         {report.jd_match}%
                       </td>
-                      <td className="py-4 text-center tabular-nums text-zinc-300">
+                      <td className="py-4 text-center tabular-nums text-foreground">
                         {report.resume_health}
                       </td>
                       <td className="py-4 text-right">
                         <Link
                           to={`/dashboard/report/${report.id}`}
-                          className="inline-flex h-8 items-center justify-center rounded-lg bg-zinc-800 hover:bg-zinc-700 px-3.5 text-xs font-semibold text-zinc-300 hover:text-white transition"
+                          className="inline-flex h-8 items-center justify-center rounded-lg bg-secondary hover:bg-secondary/80 px-3.5 text-xs font-semibold text-foreground transition"
                         >
                           View Report
                         </Link>

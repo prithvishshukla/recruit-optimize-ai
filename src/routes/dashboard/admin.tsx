@@ -53,14 +53,14 @@ function AdminDashboardPage() {
   if (profileLoading || statsLoading) {
     return (
       <div className="space-y-8 animate-pulse">
-        <div className="h-10 w-64 bg-zinc-800 rounded" />
+        <div className="h-10 w-64 bg-secondary/40 rounded" />
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          <div className="h-28 bg-zinc-800 rounded-xl" />
-          <div className="h-28 bg-zinc-800 rounded-xl" />
-          <div className="h-28 bg-zinc-800 rounded-xl" />
-          <div className="h-28 bg-zinc-800 rounded-xl" />
+          <div className="h-28 bg-secondary/40 rounded-xl" />
+          <div className="h-28 bg-secondary/40 rounded-xl" />
+          <div className="h-28 bg-secondary/40 rounded-xl" />
+          <div className="h-28 bg-secondary/40 rounded-xl" />
         </div>
-        <div className="h-80 bg-zinc-800 rounded-2xl" />
+        <div className="h-80 bg-secondary/40 rounded-2xl" />
       </div>
     );
   }
@@ -72,14 +72,14 @@ function AdminDashboardPage() {
         <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-red-500/10 border border-red-500/20 text-red-400 mb-6">
           <Lock size={26} />
         </div>
-        <h1 className="font-display text-2xl font-bold text-white">Access Denied</h1>
-        <p className="mt-2 text-sm text-zinc-400 max-w-sm">
+        <h1 className="font-display text-2xl font-bold text-foreground">Access Denied</h1>
+        <p className="mt-2 text-sm text-muted-foreground max-w-sm">
           You do not have administrative permissions. This page is restricted to platform
           administrators.
         </p>
         <Link
           to="/dashboard"
-          className="inline-flex h-11 items-center justify-center rounded-xl bg-white px-5 text-sm font-semibold text-black transition hover:bg-zinc-100 mt-6"
+          className="inline-flex h-11 items-center justify-center rounded-xl bg-foreground px-5 text-sm font-semibold text-background transition hover:opacity-90 mt-6"
         >
           Back to Dashboard
         </Link>
@@ -113,10 +113,10 @@ function AdminDashboardPage() {
     <div className="space-y-10">
       {/* Header */}
       <div>
-        <h1 className="font-display text-3xl font-extrabold tracking-tight text-white flex items-center gap-2">
+        <h1 className="font-display text-3xl font-extrabold tracking-tight text-foreground flex items-center gap-2">
           Admin Console
         </h1>
-        <p className="mt-1 text-sm text-zinc-400">
+        <p className="mt-1 text-sm text-muted-foreground">
           Monitor users, subscriptions, transaction flows, and platform analytics.
         </p>
       </div>
@@ -126,17 +126,14 @@ function AdminDashboardPage() {
         {kpis.map((kpi) => {
           const Icon = kpi.icon;
           return (
-            <div
-              key={kpi.label}
-              className="rounded-2xl border border-zinc-800 bg-[#0d0d10] p-5 shadow-sm"
-            >
+            <div key={kpi.label} className="rounded-2xl border border-border bg-card p-5 shadow-sm">
               <div className="flex justify-between items-start">
-                <span className="text-xs font-semibold uppercase tracking-wider text-zinc-500">
+                <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
                   {kpi.label}
                 </span>
                 <Icon size={18} style={{ color: kpi.color }} />
               </div>
-              <div className="mt-4 font-display text-2xl font-bold text-white tabular-nums">
+              <div className="mt-4 font-display text-2xl font-bold text-foreground tabular-nums">
                 {kpi.value}
               </div>
             </div>
@@ -145,12 +142,12 @@ function AdminDashboardPage() {
       </div>
 
       {/* Payments Table */}
-      <div className="rounded-2xl border border-zinc-800 bg-[#0d0d10] p-6">
-        <h2 className="font-display text-lg font-bold text-white mb-6">Payment History</h2>
+      <div className="rounded-2xl border border-border bg-card p-6">
+        <h2 className="font-display text-lg font-bold text-foreground mb-6">Payment History</h2>
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm">
             <thead>
-              <tr className="border-b border-zinc-800 pb-3 text-xs font-bold uppercase tracking-wider text-zinc-500">
+              <tr className="border-b border-border pb-3 text-xs font-bold uppercase tracking-wider text-muted-foreground">
                 <th className="pb-3">User Email</th>
                 <th className="pb-3">Payment ID</th>
                 <th className="pb-3">Date</th>
@@ -159,16 +156,16 @@ function AdminDashboardPage() {
                 <th className="pb-3 text-right">Status</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-zinc-800/50">
+            <tbody className="divide-y divide-border/50">
               {payments.map((payment: any) => (
-                <tr key={payment.id} className="hover:bg-zinc-900/10 transition duration-150">
-                  <td className="py-4 font-semibold text-zinc-200">
+                <tr key={payment.id} className="hover:bg-secondary/30 transition duration-150">
+                  <td className="py-4 font-semibold text-foreground">
                     {payment.profiles?.email || "Unknown User"}
                   </td>
-                  <td className="py-4 font-mono text-xs text-zinc-400">
+                  <td className="py-4 font-mono text-xs text-muted-foreground">
                     {payment.razorpay_payment_id}
                   </td>
-                  <td className="py-4 text-zinc-400">
+                  <td className="py-4 text-muted-foreground">
                     {new Date(payment.created_at).toLocaleDateString(undefined, {
                       month: "short",
                       day: "numeric",
@@ -177,16 +174,18 @@ function AdminDashboardPage() {
                       minute: "2-digit",
                     })}
                   </td>
-                  <td className="py-4 uppercase text-xs font-bold text-zinc-300">{payment.plan}</td>
-                  <td className="py-4 text-center tabular-nums text-white">
+                  <td className="py-4 uppercase text-xs font-bold text-foreground">
+                    {payment.plan}
+                  </td>
+                  <td className="py-4 text-center tabular-nums text-foreground">
                     ₹{payment.amount / 100}
                   </td>
                   <td className="py-4 text-right">
                     <span
                       className={`inline-flex rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase ${
                         payment.status === "success"
-                          ? "bg-emerald-500/10 text-emerald-400"
-                          : "bg-red-500/10 text-red-400"
+                          ? "bg-emerald-500/10 text-emerald-600"
+                          : "bg-red-500/10 text-red-600"
                       }`}
                     >
                       {payment.status}

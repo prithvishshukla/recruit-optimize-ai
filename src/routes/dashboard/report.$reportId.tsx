@@ -117,13 +117,13 @@ function ReportPage() {
   if (reportLoading) {
     return (
       <div className="space-y-8 animate-pulse">
-        <div className="h-10 w-64 bg-zinc-800 rounded" />
+        <div className="h-10 w-64 bg-secondary/40 rounded" />
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="h-44 bg-zinc-800 rounded-2xl" />
-          <div className="h-44 bg-zinc-800 rounded-2xl" />
-          <div className="h-44 bg-zinc-800 rounded-2xl" />
+          <div className="h-44 bg-secondary/40 rounded-2xl" />
+          <div className="h-44 bg-secondary/40 rounded-2xl" />
+          <div className="h-44 bg-secondary/40 rounded-2xl" />
         </div>
-        <div className="h-96 bg-zinc-800 rounded-2xl" />
+        <div className="h-96 bg-secondary/40 rounded-2xl" />
       </div>
     );
   }
@@ -132,13 +132,13 @@ function ReportPage() {
     return (
       <div className="text-center py-12">
         <AlertTriangle className="mx-auto h-12 w-12 text-red-500 mb-4" />
-        <h2 className="text-xl font-bold text-white">Report not found</h2>
-        <p className="text-sm text-zinc-400 mt-2">
+        <h2 className="text-xl font-bold text-foreground">Report not found</h2>
+        <p className="text-sm text-muted-foreground mt-2">
           The requested analysis report does not exist or you do not have permission to view it.
         </p>
         <Link
           to="/dashboard"
-          className="inline-flex h-10 items-center justify-center rounded-xl bg-white px-5 text-sm font-semibold text-black mt-6"
+          className="inline-flex h-10 items-center justify-center rounded-xl bg-foreground px-5 text-sm font-semibold text-background hover:opacity-90 mt-6"
         >
           Back to Dashboard
         </Link>
@@ -195,10 +195,10 @@ function ReportPage() {
           <span className="text-xs font-bold uppercase tracking-wider text-[#B8924A]">
             ATS Audit Report
           </span>
-          <h1 className="font-display text-3xl font-extrabold tracking-tight text-white mt-1">
+          <h1 className="font-display text-3xl font-extrabold tracking-tight text-foreground mt-1">
             {report.job_title}
           </h1>
-          <p className="text-xs text-zinc-400 mt-1">
+          <p className="text-xs text-muted-foreground mt-1">
             Audited on{" "}
             {new Date(report.created_at).toLocaleDateString(undefined, {
               dateStyle: "medium",
@@ -209,7 +209,7 @@ function ReportPage() {
         <div className="flex items-center gap-3">
           <button
             onClick={handlePrint}
-            className={`inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-zinc-900 border border-zinc-800 hover:bg-zinc-800 px-5 text-sm font-semibold text-white transition ${!isPremium && "opacity-50 cursor-not-allowed"}`}
+            className={`inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-secondary border border-border hover:bg-secondary/80 px-5 text-sm font-semibold text-foreground transition ${!isPremium && "opacity-50 cursor-not-allowed"}`}
           >
             <Download size={16} />
             Export PDF
@@ -241,53 +241,53 @@ function ReportPage() {
       {/* Summary Score Blocks */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {/* ATS Score */}
-        <div className="rounded-2xl border border-zinc-800 bg-[#0d0d10] p-6 text-center print-card">
-          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full border-4 border-[#B8924A] text-xl font-bold text-white print-text">
+        <div className="rounded-2xl border border-border bg-card p-6 text-center print-card">
+          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full border-4 border-[#B8924A] text-xl font-bold text-foreground print-text">
             {analysis.atsScore}
           </div>
-          <h3 className="mt-4 font-display text-sm font-semibold text-zinc-400 print-text">
+          <h3 className="mt-4 font-display text-sm font-semibold text-muted-foreground print-text">
             ATS Core Score
           </h3>
-          <p className="mt-1 text-[11px] text-zinc-500">
+          <p className="mt-1 text-[11px] text-muted-foreground">
             Overall parser alignment and readability.
           </p>
         </div>
 
         {/* JD Match */}
-        <div className="rounded-2xl border border-zinc-800 bg-[#0d0d10] p-6 text-center print-card">
-          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full border-4 border-[#2A8F8B] text-xl font-bold text-white print-text">
+        <div className="rounded-2xl border border-border bg-card p-6 text-center print-card">
+          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full border-4 border-[#2A8F8B] text-xl font-bold text-foreground print-text">
             {analysis.jdMatch}%
           </div>
-          <h3 className="mt-4 font-display text-sm font-semibold text-zinc-400 print-text">
+          <h3 className="mt-4 font-display text-sm font-semibold text-muted-foreground print-text">
             Job Match Index
           </h3>
-          <p className="mt-1 text-[11px] text-zinc-500">
+          <p className="mt-1 text-[11px] text-muted-foreground">
             Target qualifications and skill set matching.
           </p>
         </div>
 
         {/* Health */}
-        <div className="rounded-2xl border border-zinc-800 bg-[#0d0d10] p-6 text-center print-card">
-          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full border-4 border-indigo-500 text-xl font-bold text-white print-text">
+        <div className="rounded-2xl border border-border bg-card p-6 text-center print-card">
+          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full border-4 border-indigo-500 text-xl font-bold text-foreground print-text">
             {analysis.resumeHealth}
           </div>
-          <h3 className="mt-4 font-display text-sm font-semibold text-zinc-400 print-text">
+          <h3 className="mt-4 font-display text-sm font-semibold text-muted-foreground print-text">
             Resume Health
           </h3>
-          <p className="mt-1 text-[11px] text-zinc-500">
+          <p className="mt-1 text-[11px] text-muted-foreground">
             Action verbs density and quantified impact.
           </p>
         </div>
 
         {/* Keyword Coverage */}
-        <div className="rounded-2xl border border-zinc-800 bg-[#0d0d10] p-6 text-center print-card">
-          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full border-4 border-emerald-500 text-xl font-bold text-white print-text">
+        <div className="rounded-2xl border border-border bg-card p-6 text-center print-card">
+          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full border-4 border-emerald-500 text-xl font-bold text-foreground print-text">
             {analysis.keywordCoverage}%
           </div>
-          <h3 className="mt-4 font-display text-sm font-semibold text-zinc-400 print-text">
+          <h3 className="mt-4 font-display text-sm font-semibold text-muted-foreground print-text">
             Keyword Coverage
           </h3>
-          <p className="mt-1 text-[11px] text-zinc-500">
+          <p className="mt-1 text-[11px] text-muted-foreground">
             Percentage of target description terms matched.
           </p>
         </div>
@@ -296,11 +296,11 @@ function ReportPage() {
       {/* Main Analysis Panels */}
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
         {/* Keywords */}
-        <div className="rounded-2xl border border-zinc-800 bg-[#0d0d10] p-6 lg:col-span-2 print-card">
-          <h2 className="font-display text-lg font-bold text-white print-title">
+        <div className="rounded-2xl border border-border bg-card p-6 lg:col-span-2 print-card">
+          <h2 className="font-display text-lg font-bold text-foreground print-title">
             Target Keyword Analysis
           </h2>
-          <p className="text-xs text-zinc-400 mb-6 print-text">
+          <p className="text-xs text-muted-foreground mb-6 print-text">
             We extracted matching keywords and surfaced critical skill gaps.
           </p>
 
@@ -319,26 +319,28 @@ function ReportPage() {
                   </span>
                 ))}
                 {!analysis.foundKeywords?.length && (
-                  <span className="text-sm text-zinc-500">No matching keywords detected.</span>
+                  <span className="text-sm text-muted-foreground">
+                    No matching keywords detected.
+                  </span>
                 )}
               </div>
             </div>
 
-            <div className="border-t border-zinc-800/80 pt-5">
-              <span className="text-xs font-bold uppercase tracking-wider text-red-400">
+            <div className="border-t border-border/80 pt-5">
+              <span className="text-xs font-bold uppercase tracking-wider text-red-500">
                 Missing Keywords ({analysis.missingKeywords?.length || 0})
               </span>
               <div className="mt-3 flex flex-wrap gap-2">
                 {analysis.missingKeywords?.map((k: string) => (
                   <span
                     key={k}
-                    className="rounded-lg border border-red-500/20 bg-red-500/5 px-3 py-1.5 text-xs font-medium text-red-400"
+                    className="rounded-lg border border-red-500/20 bg-red-500/5 px-3 py-1.5 text-xs font-medium text-red-500"
                   >
                     {k}
                   </span>
                 ))}
                 {!analysis.missingKeywords?.length && (
-                  <span className="text-sm text-zinc-500">
+                  <span className="text-sm text-muted-foreground">
                     No missing keywords found! Excellent job.
                   </span>
                 )}
@@ -348,19 +350,23 @@ function ReportPage() {
         </div>
 
         {/* Section Radar chart */}
-        <div className="rounded-2xl border border-zinc-800 bg-[#0d0d10] p-6 flex flex-col items-center justify-center print-card">
-          <h2 className="w-full text-left font-display text-lg font-bold text-white print-title">
+        <div className="rounded-2xl border border-border bg-card p-6 flex flex-col items-center justify-center print-card">
+          <h2 className="w-full text-left font-display text-lg font-bold text-foreground print-title">
             Section Breakdowns
           </h2>
-          <p className="w-full text-left text-xs text-zinc-400 mb-6 print-text">
+          <p className="w-full text-left text-xs text-muted-foreground mb-6 print-text">
             Analysis of score distribution across sections.
           </p>
           <div className="h-64 w-full text-xs">
             <ResponsiveContainer width="100%" height="100%">
               <RadarChart cx="50%" cy="50%" outerRadius="80%" data={sectionChartData}>
-                <PolarGrid stroke="#27272a" />
-                <PolarAngleAxis dataKey="subject" stroke="#a1a1aa" />
-                <PolarRadiusAxis angle={30} domain={[0, 100]} stroke="#52525b" />
+                <PolarGrid stroke="var(--color-border)" />
+                <PolarAngleAxis dataKey="subject" stroke="var(--color-muted-foreground)" />
+                <PolarRadiusAxis
+                  angle={30}
+                  domain={[0, 100]}
+                  stroke="var(--color-muted-foreground)"
+                />
                 <Radar
                   name="Score"
                   dataKey="score"
@@ -377,12 +383,12 @@ function ReportPage() {
       {/* Strengths, Weaknesses, Risks */}
       <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
         {/* Strengths */}
-        <div className="rounded-2xl border border-zinc-800 bg-[#0d0d10] p-6 print-card">
-          <h3 className="font-display text-base font-bold text-white flex items-center gap-2 print-title">
-            <CheckCircle2 size={18} className="text-emerald-500" />
+        <div className="rounded-2xl border border-border bg-card p-6 print-card">
+          <h3 className="font-display text-base font-bold text-foreground flex items-center gap-2 print-title">
+            <CheckCircle2 size={18} className="text-emerald-600" />
             Core Strengths
           </h3>
-          <ul className="mt-4 space-y-3 text-xs leading-relaxed text-zinc-300 print-text">
+          <ul className="mt-4 space-y-3 text-xs leading-relaxed text-foreground print-text">
             {analysis.strengths?.map((item: string, i: number) => (
               <li key={i} className="flex gap-2">
                 <span className="text-[#B8924A] font-bold">•</span>
@@ -393,12 +399,12 @@ function ReportPage() {
         </div>
 
         {/* Weaknesses */}
-        <div className="rounded-2xl border border-zinc-800 bg-[#0d0d10] p-6 print-card">
-          <h3 className="font-display text-base font-bold text-white flex items-center gap-2 print-title">
-            <AlertTriangle size={18} className="text-amber-500" />
+        <div className="rounded-2xl border border-border bg-card p-6 print-card">
+          <h3 className="font-display text-base font-bold text-foreground flex items-center gap-2 print-title">
+            <AlertTriangle size={18} className="text-amber-600" />
             Areas to Improve
           </h3>
-          <ul className="mt-4 space-y-3 text-xs leading-relaxed text-zinc-300 print-text">
+          <ul className="mt-4 space-y-3 text-xs leading-relaxed text-foreground print-text">
             {analysis.weaknesses?.map((item: string, i: number) => (
               <li key={i} className="flex gap-2">
                 <span className="text-[#B8924A] font-bold">•</span>
@@ -409,12 +415,12 @@ function ReportPage() {
         </div>
 
         {/* Risks */}
-        <div className="rounded-2xl border border-zinc-800 bg-[#0d0d10] p-6 print-card">
-          <h3 className="font-display text-base font-bold text-white flex items-center gap-2 print-title">
+        <div className="rounded-2xl border border-border bg-card p-6 print-card">
+          <h3 className="font-display text-base font-bold text-foreground flex items-center gap-2 print-title">
             <AlertTriangle size={18} className="text-red-500" />
             ATS Risks
           </h3>
-          <ul className="mt-4 space-y-3 text-xs leading-relaxed text-zinc-300 print-text">
+          <ul className="mt-4 space-y-3 text-xs leading-relaxed text-foreground print-text">
             {analysis.atsRisks?.map((item: string, i: number) => (
               <li key={i} className="flex gap-2">
                 <span className="text-red-500 font-bold">•</span>
@@ -426,14 +432,14 @@ function ReportPage() {
       </div>
 
       {/* Suggestions block */}
-      <div className="rounded-2xl border border-zinc-800 bg-[#0d0d10] p-6 print-card">
-        <h2 className="font-display text-lg font-bold text-white print-title">
+      <div className="rounded-2xl border border-border bg-card p-6 print-card">
+        <h2 className="font-display text-lg font-bold text-foreground print-title">
           Optimization Advice
         </h2>
-        <ol className="mt-4 space-y-4 text-sm text-zinc-300 leading-relaxed print-text">
+        <ol className="mt-4 space-y-4 text-sm text-foreground leading-relaxed print-text">
           {analysis.suggestions?.map((item: string, i: number) => (
             <li key={i} className="flex gap-3">
-              <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded bg-zinc-900 border border-zinc-800 text-[10px] font-bold text-white print-card">
+              <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded bg-secondary border border-border text-[10px] font-bold text-foreground print-card">
                 {i + 1}
               </span>
               <span>{item}</span>
@@ -443,17 +449,17 @@ function ReportPage() {
       </div>
 
       {/* AI Resume Rewriter Panel */}
-      <div className="relative rounded-2xl border border-zinc-800 bg-[#0d0d10] p-6 no-print">
+      <div className="relative rounded-2xl border border-border bg-card p-6 no-print">
         {/* Lock screen overlay for free users */}
         {!isPremium && (
-          <div className="absolute inset-0 z-30 flex flex-col items-center justify-center bg-[#09090b]/80 p-6 text-center backdrop-blur-sm rounded-2xl">
+          <div className="absolute inset-0 z-30 flex flex-col items-center justify-center bg-background/80 p-6 text-center backdrop-blur-sm rounded-2xl">
             <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-[#B8924A]/10 border border-[#B8924A]/20 text-[#B8924A] mb-4">
               <Lock size={22} />
             </div>
-            <h3 className="font-display text-lg font-bold text-white">
+            <h3 className="font-display text-lg font-bold text-foreground">
               Unlock AI Rewrites & Optimization
             </h3>
-            <p className="mt-2 max-w-sm text-xs text-zinc-400">
+            <p className="mt-2 max-w-sm text-xs text-muted-foreground">
               Upgrade to Premium for side-by-side AI resume section rewrites and ATS bullet point
               optimizations.
             </p>
@@ -467,8 +473,8 @@ function ReportPage() {
         )}
 
         <div className="flex flex-col gap-1 mb-6">
-          <h2 className="font-display text-lg font-bold text-white">AI Section Rewriter</h2>
-          <p className="text-xs text-zinc-400">
+          <h2 className="font-display text-lg font-bold text-foreground">AI Section Rewriter</h2>
+          <p className="text-xs text-muted-foreground">
             Recruiter-grade section rewrites generated from your target role requirements.
           </p>
         </div>
@@ -479,7 +485,7 @@ function ReportPage() {
             <h4 className="text-xs font-bold uppercase tracking-wider text-[#B8924A]">
               Optimized Summary Rewrite
             </h4>
-            <div className="rounded-xl border border-zinc-800 bg-zinc-950/40 p-4 text-sm leading-relaxed text-zinc-300">
+            <div className="rounded-xl border border-border bg-secondary/40 p-4 text-sm leading-relaxed text-foreground">
               {analysis.rewrites?.summary || "No summary rewrite generated."}
             </div>
           </div>
@@ -491,7 +497,7 @@ function ReportPage() {
               <h4 className="text-xs font-bold uppercase tracking-wider text-[#B8924A]">
                 Skills Bullet Improvements
               </h4>
-              <div className="rounded-xl border border-zinc-800 bg-zinc-950/40 p-4 space-y-2 text-xs leading-relaxed text-zinc-300">
+              <div className="rounded-xl border border-border bg-secondary/40 p-4 space-y-2 text-xs leading-relaxed text-foreground">
                 {analysis.rewrites?.skills?.map((item: string, i: number) => (
                   <p key={i}>• {item}</p>
                 ))}
@@ -503,7 +509,7 @@ function ReportPage() {
               <h4 className="text-xs font-bold uppercase tracking-wider text-[#B8924A]">
                 Work Experience Optimization
               </h4>
-              <div className="rounded-xl border border-zinc-800 bg-zinc-950/40 p-4 space-y-2 text-xs leading-relaxed text-zinc-300">
+              <div className="rounded-xl border border-border bg-secondary/40 p-4 space-y-2 text-xs leading-relaxed text-foreground">
                 {analysis.rewrites?.experience?.map((item: string, i: number) => (
                   <p key={i}>• {item}</p>
                 ))}
@@ -514,17 +520,17 @@ function ReportPage() {
       </div>
 
       {/* Bullet Point Optimizer Tool */}
-      <div className="relative rounded-2xl border border-zinc-800 bg-[#0d0d10] p-6 no-print">
+      <div className="relative rounded-2xl border border-border bg-card p-6 no-print">
         {/* Lock screen overlay for free users */}
         {!isPremium && (
-          <div className="absolute inset-0 z-30 flex flex-col items-center justify-center bg-[#09090b]/80 p-6 text-center backdrop-blur-sm rounded-2xl">
+          <div className="absolute inset-0 z-30 flex flex-col items-center justify-center bg-background/80 p-6 text-center backdrop-blur-sm rounded-2xl">
             <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-[#B8924A]/10 border border-[#B8924A]/20 text-[#B8924A] mb-4">
               <Lock size={22} />
             </div>
-            <h3 className="font-display text-lg font-bold text-white">
+            <h3 className="font-display text-lg font-bold text-foreground">
               Unlock Bullet Point Optimizer
             </h3>
-            <p className="mt-2 max-w-sm text-xs text-zinc-400">
+            <p className="mt-2 max-w-sm text-xs text-muted-foreground">
               Transform weak experience descriptions into quantified action points with 3 customized
               alternatives.
             </p>
@@ -538,10 +544,10 @@ function ReportPage() {
         )}
 
         <div className="flex flex-col gap-1 mb-6">
-          <h2 className="font-display text-lg font-bold text-white">
+          <h2 className="font-display text-lg font-bold text-foreground">
             Interactive Bullet Optimizer
           </h2>
-          <p className="text-xs text-zinc-400">
+          <p className="text-xs text-muted-foreground">
             Paste a weak resume bullet point to rewrite it using action verbs and metrics.
           </p>
         </div>
@@ -552,12 +558,12 @@ function ReportPage() {
             placeholder="e.g. Worked on frontend application and fixed bugs."
             value={inputBullet}
             onChange={(e) => setInputBullet(e.target.value)}
-            className="flex-1 h-11 rounded-xl border border-zinc-800 bg-zinc-950/30 px-4 text-sm text-white placeholder-zinc-500 focus:border-[#B8924A] focus:outline-none transition"
+            className="flex-1 h-11 rounded-xl border border-border bg-background px-4 text-sm text-foreground placeholder-muted-foreground focus:border-[#B8924A] focus:outline-none transition"
           />
           <button
             type="submit"
             disabled={optimizing || !inputBullet}
-            className="inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-white px-5 text-sm font-semibold text-black hover:bg-zinc-100 transition duration-200 shrink-0"
+            className="inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-foreground hover:opacity-90 px-5 text-sm font-semibold text-background transition duration-200 shrink-0"
           >
             {optimizing ? (
               <>
@@ -579,7 +585,7 @@ function ReportPage() {
               {optimizedBullets.map((bullet, i) => (
                 <div
                   key={i}
-                  className="rounded-xl border border-zinc-800 bg-zinc-950/40 p-4 text-xs leading-relaxed text-zinc-300"
+                  className="rounded-xl border border-border bg-secondary/40 p-4 text-xs leading-relaxed text-foreground"
                 >
                   {bullet}
                 </div>

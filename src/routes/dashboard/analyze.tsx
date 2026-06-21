@@ -246,10 +246,10 @@ function AnalyzePage() {
     <div className="mx-auto max-w-4xl space-y-8">
       {/* Header */}
       <div>
-        <h1 className="font-display text-3xl font-extrabold tracking-tight text-white">
+        <h1 className="font-display text-3xl font-extrabold tracking-tight text-foreground">
           ATS Audit Engine
         </h1>
-        <p className="mt-1 text-sm text-zinc-400">
+        <p className="mt-1 text-sm text-muted-foreground">
           Upload your resume and paste the target job description to run a detailed ATS scan.
         </p>
       </div>
@@ -258,8 +258,8 @@ function AnalyzePage() {
         <div className="flex gap-3.5 rounded-2xl border border-amber-500/20 bg-amber-500/5 p-5 text-amber-200">
           <AlertTriangle className="h-5 w-5 shrink-0 text-amber-400 mt-0.5" />
           <div className="text-sm leading-relaxed">
-            <strong className="text-white">Daily Scan Limit Reached</strong>
-            <p className="mt-1 text-zinc-300">
+            <strong className="text-foreground">Daily Scan Limit Reached</strong>
+            <p className="mt-1 text-muted-foreground">
               Your free tier account permits 1 ATS scan daily. You have already completed your daily
               scan quota. Upgrade to unlock unlimited scans, bullet point optimization, and AI
               resume rewrites.
@@ -278,11 +278,13 @@ function AnalyzePage() {
 
       {isAnalyzing ? (
         /* Progress Screen */
-        <div className="rounded-3xl border border-zinc-800/80 bg-[#0d0d10] p-12 text-center">
+        <div className="rounded-3xl border border-border bg-card p-12 text-center">
           <Loader2 className="mx-auto h-12 w-12 animate-spin text-[#B8924A] mb-6" />
-          <h2 className="font-display text-xl font-bold text-white">Performing Resume Audit</h2>
-          <p className="mt-2 text-sm text-zinc-400 max-w-sm mx-auto">{analysisStatus}</p>
-          <div className="mt-6 mx-auto max-w-md bg-zinc-800 h-2 rounded-full overflow-hidden">
+          <h2 className="font-display text-xl font-bold text-foreground">
+            Performing Resume Audit
+          </h2>
+          <p className="mt-2 text-sm text-muted-foreground max-w-sm mx-auto">{analysisStatus}</p>
+          <div className="mt-6 mx-auto max-w-md bg-secondary h-2 rounded-full overflow-hidden">
             <div className="bg-[#B8924A] h-full animate-[pulse_1.5s_infinite] w-[70%]" />
           </div>
         </div>
@@ -290,8 +292,8 @@ function AnalyzePage() {
         /* Setup Form */
         <form onSubmit={handleStartAnalysis} className="space-y-6">
           {/* File Upload Box */}
-          <div className="rounded-2xl border border-zinc-800 bg-[#0d0d10] p-6 space-y-4">
-            <h2 className="text-sm font-semibold uppercase tracking-wider text-zinc-400">
+          <div className="rounded-2xl border border-border bg-card p-6 space-y-4">
+            <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">
               1. Resume Upload
             </h2>
 
@@ -305,7 +307,7 @@ function AnalyzePage() {
                 className={`relative flex flex-col items-center justify-center rounded-xl border-2 border-dashed px-6 py-10 text-center cursor-pointer transition ${
                   dragActive
                     ? "border-[#B8924A] bg-[#B8924A]/5"
-                    : "border-zinc-800 hover:border-zinc-700 bg-zinc-950/20"
+                    : "border-border hover:border-border/80 bg-secondary/20"
                 }`}
               >
                 <input
@@ -316,23 +318,23 @@ function AnalyzePage() {
                   className="hidden"
                   disabled={isLimitReached}
                 />
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-zinc-900 border border-zinc-800 text-zinc-400 mb-4">
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-secondary border border-border text-muted-foreground mb-4">
                   <Upload size={22} />
                 </div>
-                <h3 className="text-sm font-bold text-zinc-200">Drag and drop resume PDF</h3>
-                <p className="mt-1 text-xs text-zinc-500">
+                <h3 className="text-sm font-bold text-foreground">Drag and drop resume PDF</h3>
+                <p className="mt-1 text-xs text-muted-foreground">
                   PDF format only. Maximum file size 10 MB.
                 </p>
               </div>
             ) : (
-              <div className="flex items-center justify-between rounded-xl border border-zinc-800/80 bg-zinc-950/40 p-4">
+              <div className="flex items-center justify-between rounded-xl border border-border bg-secondary/40 p-4">
                 <div className="flex items-center gap-3.5 min-w-0">
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-green-500/10 border border-green-500/20 text-green-400">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-green-500/10 border border-green-500/20 text-green-600">
                     <FileCheck size={20} />
                   </div>
                   <div className="min-w-0">
-                    <p className="text-sm font-semibold text-zinc-200 truncate">{file.name}</p>
-                    <span className="text-xs text-zinc-500">
+                    <p className="text-sm font-semibold text-foreground truncate">{file.name}</p>
+                    <span className="text-xs text-muted-foreground">
                       {(file.size / (1024 * 1024)).toFixed(2)} MB
                     </span>
                   </div>
@@ -340,7 +342,7 @@ function AnalyzePage() {
                 <button
                   type="button"
                   onClick={clearFile}
-                  className="text-zinc-500 hover:text-zinc-300 p-1.5 rounded-lg hover:bg-zinc-800/50 transition"
+                  className="text-muted-foreground hover:text-foreground p-1.5 rounded-lg hover:bg-secondary/50 transition"
                 >
                   <X size={16} />
                 </button>
@@ -349,34 +351,34 @@ function AnalyzePage() {
           </div>
 
           {/* Job Details Box */}
-          <div className="rounded-2xl border border-zinc-800 bg-[#0d0d10] p-6 space-y-5">
-            <h2 className="text-sm font-semibold uppercase tracking-wider text-zinc-400">
+          <div className="rounded-2xl border border-border bg-card p-6 space-y-5">
+            <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground">
               2. Target Position Details
             </h2>
 
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">
+              <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
                 Job Title
               </label>
               <div className="relative">
-                <Briefcase className="absolute left-3.5 top-3 h-4 w-4 text-zinc-500" />
+                <Briefcase className="absolute left-3.5 top-3 h-4 w-4 text-muted-foreground" />
                 <input
                   type="text"
                   placeholder="e.g. Senior Frontend Engineer"
                   value={jobTitle}
                   onChange={(e) => setJobTitle(e.target.value)}
                   disabled={isLimitReached}
-                  className="h-11 w-full rounded-xl border border-zinc-800 bg-zinc-950/30 pl-10 pr-4 text-sm text-white placeholder-zinc-500 focus:border-[#B8924A] focus:outline-none transition"
+                  className="h-11 w-full rounded-xl border border-border bg-background pl-10 pr-4 text-sm text-foreground placeholder-muted-foreground focus:border-[#B8924A] focus:outline-none transition"
                 />
               </div>
             </div>
 
             <div className="space-y-1.5">
               <div className="flex justify-between items-center">
-                <label className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">
+                <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
                   Job Description
                 </label>
-                <span className="text-[10px] font-semibold text-zinc-500">
+                <span className="text-[10px] font-semibold text-muted-foreground">
                   {jobDescription.length} characters
                 </span>
               </div>
@@ -386,7 +388,7 @@ function AnalyzePage() {
                 value={jobDescription}
                 onChange={(e) => setJobDescription(e.target.value)}
                 disabled={isLimitReached}
-                className="w-full rounded-xl border border-zinc-800 bg-zinc-950/30 p-4 text-sm text-white placeholder-zinc-500 focus:border-[#B8924A] focus:outline-none transition leading-relaxed resize-y"
+                className="w-full rounded-xl border border-border bg-background p-4 text-sm text-foreground placeholder-muted-foreground focus:border-[#B8924A] focus:outline-none transition leading-relaxed resize-y"
               />
             </div>
           </div>
@@ -395,7 +397,7 @@ function AnalyzePage() {
           <button
             type="submit"
             disabled={isLimitReached || !file || !jobTitle || !jobDescription}
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-white text-black font-semibold hover:bg-zinc-100 disabled:bg-zinc-800 disabled:text-zinc-500 disabled:cursor-not-allowed transition duration-200 shadow-md active:scale-[0.99]"
+            className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-[#B8924A] text-black font-semibold hover:bg-[#B8924A]/90 disabled:bg-secondary disabled:text-muted-foreground/50 disabled:cursor-not-allowed transition duration-200 shadow-md active:scale-[0.99]"
           >
             Run ATS Resume Audit
           </button>

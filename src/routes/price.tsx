@@ -12,7 +12,7 @@ import {
   ArrowRight,
   ShieldCheck,
   CreditCard,
-  Zap
+  Zap,
 } from "lucide-react";
 
 export const Route = createFileRoute("/price")({
@@ -92,7 +92,7 @@ function PricingPage() {
           try {
             await recordPaymentAndUpgrade(
               response.razorpay_payment_id || "pay_mock_" + Math.random().toString(36).substr(2, 9),
-              response.razorpay_order_id || "order_mock_" + Math.random().toString(36).substr(2, 9)
+              response.razorpay_order_id || "order_mock_" + Math.random().toString(36).substr(2, 9),
             );
           } catch (err: any) {
             toast.error("Failed to update plan", { description: err.message });
@@ -123,7 +123,7 @@ function PricingPage() {
     try {
       await recordPaymentAndUpgrade(
         "pay_sim_" + Math.random().toString(36).substr(2, 9),
-        "order_sim_" + Math.random().toString(36).substr(2, 9)
+        "order_sim_" + Math.random().toString(36).substr(2, 9),
       );
       setSimulating(false);
     } catch (err: any) {
@@ -149,11 +149,7 @@ function PricingPage() {
     const currentPeriodEnd = new Date();
     currentPeriodEnd.setDate(currentPeriodEnd.getDate() + 30);
 
-    await db.upsertSubscription(
-      user?.id || "",
-      "premium",
-      currentPeriodEnd.toISOString()
-    );
+    await db.upsertSubscription(user?.id || "", "premium", currentPeriodEnd.toISOString());
 
     // Activity Log
     await db.insertActivityLog({
@@ -163,7 +159,7 @@ function PricingPage() {
     });
 
     toast.success("Welcome to Premium!", {
-      description: "All features unlocked. You have unlimited scans."
+      description: "All features unlocked. You have unlimited scans.",
     });
 
     queryClient.invalidateQueries({ queryKey: ["userSubscription"] });
@@ -174,7 +170,7 @@ function PricingPage() {
     "1 ATS scan daily",
     "Basic ATS score parsing",
     "Standard Suggestions",
-    "Online Dashboard"
+    "Online Dashboard",
   ];
 
   const premiumFeatures = [
@@ -185,7 +181,7 @@ function PricingPage() {
     "High-Fidelity PDF Reports Export",
     "Version Comparison & Deltas Tracking",
     "Full Analytics Trends",
-    "Admin Auditing logs support"
+    "Admin Auditing logs support",
   ];
 
   return (
@@ -203,7 +199,10 @@ function PricingPage() {
             </div>
           </Link>
           <div className="flex items-center gap-4">
-            <Link to="/dashboard" className="text-sm font-medium text-zinc-400 hover:text-white transition">
+            <Link
+              to="/dashboard"
+              className="text-sm font-medium text-zinc-400 hover:text-white transition"
+            >
               Go to Dashboard
             </Link>
           </div>
@@ -220,7 +219,8 @@ function PricingPage() {
             Audit without constraints.
           </h1>
           <p className="mx-auto max-w-xl text-sm leading-relaxed text-zinc-400">
-            Improve your interviews chances with unlimited evaluations, section optimizations, and progress history comparison tools.
+            Improve your interviews chances with unlimited evaluations, section optimizations, and
+            progress history comparison tools.
           </p>
         </div>
 
@@ -230,7 +230,9 @@ function PricingPage() {
           <div className="rounded-3xl border border-zinc-800 bg-[#0d0d10] p-8 flex flex-col justify-between">
             <div className="space-y-6">
               <div>
-                <span className="text-xs font-semibold uppercase tracking-wider text-zinc-500">Free Tier</span>
+                <span className="text-xs font-semibold uppercase tracking-wider text-zinc-500">
+                  Free Tier
+                </span>
                 <div className="mt-2 font-display text-4xl font-extrabold text-white">₹0</div>
                 <p className="mt-1 text-xs text-zinc-500">Basic audit capabilities</p>
               </div>
@@ -263,7 +265,9 @@ function PricingPage() {
 
             <div className="space-y-6">
               <div>
-                <span className="text-xs font-semibold uppercase tracking-wider text-[#e6c17e]">Premium Access</span>
+                <span className="text-xs font-semibold uppercase tracking-wider text-[#e6c17e]">
+                  Premium Access
+                </span>
                 <div className="mt-2 font-display text-4xl font-extrabold text-[#B8924A]">₹49</div>
                 <p className="mt-1 text-xs text-[#e6c17e]/80">Per user / month</p>
               </div>
@@ -305,7 +309,12 @@ function PricingPage() {
             </div>
             <h3 className="font-display text-sm font-bold text-white">Razorpay Key Missing</h3>
             <p className="mt-1.5 text-xs text-zinc-400 leading-relaxed">
-              No public Razorpay API key (<code className="rounded bg-zinc-900 px-1 py-0.5 font-mono text-zinc-200">VITE_RAZORPAY_KEY_ID</code>) is set in your env. You can simulate a successful upgrade to test the Premium features.
+              No public Razorpay API key (
+              <code className="rounded bg-zinc-900 px-1 py-0.5 font-mono text-zinc-200">
+                VITE_RAZORPAY_KEY_ID
+              </code>
+              ) is set in your env. You can simulate a successful upgrade to test the Premium
+              features.
             </p>
             <div className="mt-5 flex gap-2.5 justify-center">
               <button

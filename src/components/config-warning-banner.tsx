@@ -30,10 +30,25 @@ export function ConfigWarningBanner() {
             </svg>
           </div>
           <div>
-            <span className="text-xs font-bold uppercase tracking-wider text-[#B8924A]">Supabase Configuration Notice</span>
+            <span className="text-xs font-bold uppercase tracking-wider text-[#B8924A]">
+              Supabase Configuration Notice
+            </span>
             <p className="mt-0.5 text-sm leading-relaxed text-zinc-300">
-              The application is running in <strong className="text-white">Offline/Mock Mode</strong>. To connect to your Supabase project, make sure <code className="rounded bg-zinc-800 px-1.5 py-0.5 text-[12px] font-mono text-zinc-200">VITE_SUPABASE_URL</code> and <code className="rounded bg-zinc-800 px-1.5 py-0.5 text-[12px] font-mono text-zinc-200">VITE_SUPABASE_ANON_KEY</code> are correctly set in your <code className="rounded bg-zinc-800 px-1.5 py-0.5 text-[12px] font-mono text-zinc-200">.env</code> file.
-              Authentication and database connections will be mocked.
+              The application is running in{" "}
+              <strong className="text-white">Offline/Mock Mode</strong>. To connect to your Supabase
+              project, make sure{" "}
+              <code className="rounded bg-zinc-800 px-1.5 py-0.5 text-[12px] font-mono text-zinc-200">
+                VITE_SUPABASE_URL
+              </code>{" "}
+              and{" "}
+              <code className="rounded bg-zinc-800 px-1.5 py-0.5 text-[12px] font-mono text-zinc-200">
+                VITE_SUPABASE_ANON_KEY
+              </code>{" "}
+              are correctly set in your{" "}
+              <code className="rounded bg-zinc-800 px-1.5 py-0.5 text-[12px] font-mono text-zinc-200">
+                .env
+              </code>{" "}
+              file. Authentication and database connections will be mocked.
             </p>
           </div>
         </div>

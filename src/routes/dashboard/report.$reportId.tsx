@@ -17,7 +17,7 @@ import {
   FileText,
   Activity,
   Plus,
-  RefreshCw
+  RefreshCw,
 } from "lucide-react";
 import {
   ResponsiveContainer,
@@ -25,7 +25,7 @@ import {
   PolarGrid,
   PolarAngleAxis,
   PolarRadiusAxis,
-  Radar
+  Radar,
 } from "recharts";
 
 export const Route = createFileRoute("/dashboard/report/$reportId")({
@@ -35,14 +35,18 @@ export const Route = createFileRoute("/dashboard/report/$reportId")({
 function ReportPage() {
   const { reportId } = useParams({ from: "/dashboard/report/$reportId" });
   const { user } = useAuth();
-  
+
   // Bullet point optimizer state
   const [inputBullet, setInputBullet] = useState("");
   const [optimizing, setOptimizing] = useState(false);
   const [optimizedBullets, setOptimizedBullets] = useState<string[]>([]);
 
   // Fetch report
-  const { data: report, isLoading: reportLoading, error } = useQuery({
+  const {
+    data: report,
+    isLoading: reportLoading,
+    error,
+  } = useQuery({
     queryKey: ["reportDetail", reportId],
     queryFn: async () => {
       return db.getReportDetail(reportId);
@@ -76,11 +80,15 @@ function ReportPage() {
   const handleOptimizeBullet = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!isPremium) {
-      toast.error("Premium feature", { description: "Upgrade to Premium to optimize bullet points." });
+      toast.error("Premium feature", {
+        description: "Upgrade to Premium to optimize bullet points.",
+      });
       return;
     }
     if (!inputBullet.trim() || inputBullet.length < 10) {
-      toast.error("Input too short", { description: "Enter a bullet point of at least 10 characters." });
+      toast.error("Input too short", {
+        description: "Enter a bullet point of at least 10 characters.",
+      });
       return;
     }
 
@@ -98,7 +106,9 @@ function ReportPage() {
 
   const handlePrint = () => {
     if (!isPremium) {
-      toast.error("Premium feature", { description: "Upgrade to Premium to export reports as PDF." });
+      toast.error("Premium feature", {
+        description: "Upgrade to Premium to export reports as PDF.",
+      });
       return;
     }
     window.print();
@@ -123,8 +133,13 @@ function ReportPage() {
       <div className="text-center py-12">
         <AlertTriangle className="mx-auto h-12 w-12 text-red-500 mb-4" />
         <h2 className="text-xl font-bold text-white">Report not found</h2>
-        <p className="text-sm text-zinc-400 mt-2">The requested analysis report does not exist or you do not have permission to view it.</p>
-        <Link to="/dashboard" className="inline-flex h-10 items-center justify-center rounded-xl bg-white px-5 text-sm font-semibold text-black mt-6">
+        <p className="text-sm text-zinc-400 mt-2">
+          The requested analysis report does not exist or you do not have permission to view it.
+        </p>
+        <Link
+          to="/dashboard"
+          className="inline-flex h-10 items-center justify-center rounded-xl bg-white px-5 text-sm font-semibold text-black mt-6"
+        >
           Back to Dashboard
         </Link>
       </div>
@@ -177,14 +192,18 @@ function ReportPage() {
       {/* Header Info */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between no-print">
         <div>
-          <span className="text-xs font-bold uppercase tracking-wider text-[#B8924A]">ATS Audit Report</span>
+          <span className="text-xs font-bold uppercase tracking-wider text-[#B8924A]">
+            ATS Audit Report
+          </span>
           <h1 className="font-display text-3xl font-extrabold tracking-tight text-white mt-1">
             {report.job_title}
           </h1>
           <p className="text-xs text-zinc-400 mt-1">
-            Audited on {new Date(report.created_at).toLocaleDateString(undefined, {
-              dateStyle: "medium"
-            })} · Resume: {report.resumes?.file_name}
+            Audited on{" "}
+            {new Date(report.created_at).toLocaleDateString(undefined, {
+              dateStyle: "medium",
+            })}{" "}
+            · Resume: {report.resumes?.file_name}
           </p>
         </div>
         <div className="flex items-center gap-3">
@@ -206,9 +225,15 @@ function ReportPage() {
             <p className="text-xs text-zinc-600">Applicant Tracking System audit report</p>
           </div>
           <div className="text-right text-xs text-zinc-600">
-            <p><strong>Candidate:</strong> {profile?.full_name || user?.email}</p>
-            <p><strong>Audited Role:</strong> {report.job_title}</p>
-            <p><strong>Date:</strong> {new Date(report.created_at).toLocaleDateString()}</p>
+            <p>
+              <strong>Candidate:</strong> {profile?.full_name || user?.email}
+            </p>
+            <p>
+              <strong>Audited Role:</strong> {report.job_title}
+            </p>
+            <p>
+              <strong>Date:</strong> {new Date(report.created_at).toLocaleDateString()}
+            </p>
           </div>
         </div>
       </div>
@@ -220,8 +245,12 @@ function ReportPage() {
           <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full border-4 border-[#B8924A] text-xl font-bold text-white print-text">
             {analysis.atsScore}
           </div>
-          <h3 className="mt-4 font-display text-sm font-semibold text-zinc-400 print-text">ATS Core Score</h3>
-          <p className="mt-1 text-[11px] text-zinc-500">Overall parser alignment and readability.</p>
+          <h3 className="mt-4 font-display text-sm font-semibold text-zinc-400 print-text">
+            ATS Core Score
+          </h3>
+          <p className="mt-1 text-[11px] text-zinc-500">
+            Overall parser alignment and readability.
+          </p>
         </div>
 
         {/* JD Match */}
@@ -229,8 +258,12 @@ function ReportPage() {
           <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full border-4 border-[#2A8F8B] text-xl font-bold text-white print-text">
             {analysis.jdMatch}%
           </div>
-          <h3 className="mt-4 font-display text-sm font-semibold text-zinc-400 print-text">Job Match Index</h3>
-          <p className="mt-1 text-[11px] text-zinc-500">Target qualifications and skill set matching.</p>
+          <h3 className="mt-4 font-display text-sm font-semibold text-zinc-400 print-text">
+            Job Match Index
+          </h3>
+          <p className="mt-1 text-[11px] text-zinc-500">
+            Target qualifications and skill set matching.
+          </p>
         </div>
 
         {/* Health */}
@@ -238,8 +271,12 @@ function ReportPage() {
           <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full border-4 border-indigo-500 text-xl font-bold text-white print-text">
             {analysis.resumeHealth}
           </div>
-          <h3 className="mt-4 font-display text-sm font-semibold text-zinc-400 print-text">Resume Health</h3>
-          <p className="mt-1 text-[11px] text-zinc-500">Action verbs density and quantified impact.</p>
+          <h3 className="mt-4 font-display text-sm font-semibold text-zinc-400 print-text">
+            Resume Health
+          </h3>
+          <p className="mt-1 text-[11px] text-zinc-500">
+            Action verbs density and quantified impact.
+          </p>
         </div>
 
         {/* Keyword Coverage */}
@@ -247,8 +284,12 @@ function ReportPage() {
           <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full border-4 border-emerald-500 text-xl font-bold text-white print-text">
             {analysis.keywordCoverage}%
           </div>
-          <h3 className="mt-4 font-display text-sm font-semibold text-zinc-400 print-text">Keyword Coverage</h3>
-          <p className="mt-1 text-[11px] text-zinc-500">Percentage of target description terms matched.</p>
+          <h3 className="mt-4 font-display text-sm font-semibold text-zinc-400 print-text">
+            Keyword Coverage
+          </h3>
+          <p className="mt-1 text-[11px] text-zinc-500">
+            Percentage of target description terms matched.
+          </p>
         </div>
       </div>
 
@@ -256,31 +297,51 @@ function ReportPage() {
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
         {/* Keywords */}
         <div className="rounded-2xl border border-zinc-800 bg-[#0d0d10] p-6 lg:col-span-2 print-card">
-          <h2 className="font-display text-lg font-bold text-white print-title">Target Keyword Analysis</h2>
-          <p className="text-xs text-zinc-400 mb-6 print-text">We extracted matching keywords and surfaced critical skill gaps.</p>
+          <h2 className="font-display text-lg font-bold text-white print-title">
+            Target Keyword Analysis
+          </h2>
+          <p className="text-xs text-zinc-400 mb-6 print-text">
+            We extracted matching keywords and surfaced critical skill gaps.
+          </p>
 
           <div className="space-y-5">
             <div>
-              <span className="text-xs font-bold uppercase tracking-wider text-[#2A8F8B]">Matching Keywords ({analysis.foundKeywords?.length || 0})</span>
+              <span className="text-xs font-bold uppercase tracking-wider text-[#2A8F8B]">
+                Matching Keywords ({analysis.foundKeywords?.length || 0})
+              </span>
               <div className="mt-3 flex flex-wrap gap-2">
                 {analysis.foundKeywords?.map((k: string) => (
-                  <span key={k} className="rounded-lg border border-[#2A8F8B]/30 bg-[#2A8F8B]/5 px-3 py-1.5 text-xs font-medium text-[#2A8F8B]">
+                  <span
+                    key={k}
+                    className="rounded-lg border border-[#2A8F8B]/30 bg-[#2A8F8B]/5 px-3 py-1.5 text-xs font-medium text-[#2A8F8B]"
+                  >
                     {k}
                   </span>
                 ))}
-                {!analysis.foundKeywords?.length && <span className="text-sm text-zinc-500">No matching keywords detected.</span>}
+                {!analysis.foundKeywords?.length && (
+                  <span className="text-sm text-zinc-500">No matching keywords detected.</span>
+                )}
               </div>
             </div>
 
             <div className="border-t border-zinc-800/80 pt-5">
-              <span className="text-xs font-bold uppercase tracking-wider text-red-400">Missing Keywords ({analysis.missingKeywords?.length || 0})</span>
+              <span className="text-xs font-bold uppercase tracking-wider text-red-400">
+                Missing Keywords ({analysis.missingKeywords?.length || 0})
+              </span>
               <div className="mt-3 flex flex-wrap gap-2">
                 {analysis.missingKeywords?.map((k: string) => (
-                  <span key={k} className="rounded-lg border border-red-500/20 bg-red-500/5 px-3 py-1.5 text-xs font-medium text-red-400">
+                  <span
+                    key={k}
+                    className="rounded-lg border border-red-500/20 bg-red-500/5 px-3 py-1.5 text-xs font-medium text-red-400"
+                  >
                     {k}
                   </span>
                 ))}
-                {!analysis.missingKeywords?.length && <span className="text-sm text-zinc-500">No missing keywords found! Excellent job.</span>}
+                {!analysis.missingKeywords?.length && (
+                  <span className="text-sm text-zinc-500">
+                    No missing keywords found! Excellent job.
+                  </span>
+                )}
               </div>
             </div>
           </div>
@@ -288,15 +349,25 @@ function ReportPage() {
 
         {/* Section Radar chart */}
         <div className="rounded-2xl border border-zinc-800 bg-[#0d0d10] p-6 flex flex-col items-center justify-center print-card">
-          <h2 className="w-full text-left font-display text-lg font-bold text-white print-title">Section Breakdowns</h2>
-          <p className="w-full text-left text-xs text-zinc-400 mb-6 print-text">Analysis of score distribution across sections.</p>
+          <h2 className="w-full text-left font-display text-lg font-bold text-white print-title">
+            Section Breakdowns
+          </h2>
+          <p className="w-full text-left text-xs text-zinc-400 mb-6 print-text">
+            Analysis of score distribution across sections.
+          </p>
           <div className="h-64 w-full text-xs">
             <ResponsiveContainer width="100%" height="100%">
               <RadarChart cx="50%" cy="50%" outerRadius="80%" data={sectionChartData}>
                 <PolarGrid stroke="#27272a" />
                 <PolarAngleAxis dataKey="subject" stroke="#a1a1aa" />
                 <PolarRadiusAxis angle={30} domain={[0, 100]} stroke="#52525b" />
-                <Radar name="Score" dataKey="score" stroke="#B8924A" fill="#B8924A" fillOpacity={0.3} />
+                <Radar
+                  name="Score"
+                  dataKey="score"
+                  stroke="#B8924A"
+                  fill="#B8924A"
+                  fillOpacity={0.3}
+                />
               </RadarChart>
             </ResponsiveContainer>
           </div>
@@ -356,7 +427,9 @@ function ReportPage() {
 
       {/* Suggestions block */}
       <div className="rounded-2xl border border-zinc-800 bg-[#0d0d10] p-6 print-card">
-        <h2 className="font-display text-lg font-bold text-white print-title">Optimization Advice</h2>
+        <h2 className="font-display text-lg font-bold text-white print-title">
+          Optimization Advice
+        </h2>
         <ol className="mt-4 space-y-4 text-sm text-zinc-300 leading-relaxed print-text">
           {analysis.suggestions?.map((item: string, i: number) => (
             <li key={i} className="flex gap-3">
@@ -377,9 +450,12 @@ function ReportPage() {
             <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-[#B8924A]/10 border border-[#B8924A]/20 text-[#B8924A] mb-4">
               <Lock size={22} />
             </div>
-            <h3 className="font-display text-lg font-bold text-white">Unlock AI Rewrites & Optimization</h3>
+            <h3 className="font-display text-lg font-bold text-white">
+              Unlock AI Rewrites & Optimization
+            </h3>
             <p className="mt-2 max-w-sm text-xs text-zinc-400">
-              Upgrade to Premium for side-by-side AI resume section rewrites and ATS bullet point optimizations.
+              Upgrade to Premium for side-by-side AI resume section rewrites and ATS bullet point
+              optimizations.
             </p>
             <Link
               to="/price"
@@ -392,13 +468,17 @@ function ReportPage() {
 
         <div className="flex flex-col gap-1 mb-6">
           <h2 className="font-display text-lg font-bold text-white">AI Section Rewriter</h2>
-          <p className="text-xs text-zinc-400">Recruiter-grade section rewrites generated from your target role requirements.</p>
+          <p className="text-xs text-zinc-400">
+            Recruiter-grade section rewrites generated from your target role requirements.
+          </p>
         </div>
 
         <div className="space-y-6">
           {/* Summary Rewrite */}
           <div className="space-y-2">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-[#B8924A]">Optimized Summary Rewrite</h4>
+            <h4 className="text-xs font-bold uppercase tracking-wider text-[#B8924A]">
+              Optimized Summary Rewrite
+            </h4>
             <div className="rounded-xl border border-zinc-800 bg-zinc-950/40 p-4 text-sm leading-relaxed text-zinc-300">
               {analysis.rewrites?.summary || "No summary rewrite generated."}
             </div>
@@ -408,7 +488,9 @@ function ReportPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Skills rewrites */}
             <div className="space-y-2">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-[#B8924A]">Skills Bullet Improvements</h4>
+              <h4 className="text-xs font-bold uppercase tracking-wider text-[#B8924A]">
+                Skills Bullet Improvements
+              </h4>
               <div className="rounded-xl border border-zinc-800 bg-zinc-950/40 p-4 space-y-2 text-xs leading-relaxed text-zinc-300">
                 {analysis.rewrites?.skills?.map((item: string, i: number) => (
                   <p key={i}>• {item}</p>
@@ -418,7 +500,9 @@ function ReportPage() {
 
             {/* Experience rewrites */}
             <div className="space-y-2">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-[#B8924A]">Work Experience Optimization</h4>
+              <h4 className="text-xs font-bold uppercase tracking-wider text-[#B8924A]">
+                Work Experience Optimization
+              </h4>
               <div className="rounded-xl border border-zinc-800 bg-zinc-950/40 p-4 space-y-2 text-xs leading-relaxed text-zinc-300">
                 {analysis.rewrites?.experience?.map((item: string, i: number) => (
                   <p key={i}>• {item}</p>
@@ -437,9 +521,12 @@ function ReportPage() {
             <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-xl bg-[#B8924A]/10 border border-[#B8924A]/20 text-[#B8924A] mb-4">
               <Lock size={22} />
             </div>
-            <h3 className="font-display text-lg font-bold text-white">Unlock Bullet Point Optimizer</h3>
+            <h3 className="font-display text-lg font-bold text-white">
+              Unlock Bullet Point Optimizer
+            </h3>
             <p className="mt-2 max-w-sm text-xs text-zinc-400">
-              Transform weak experience descriptions into quantified action points with 3 customized alternatives.
+              Transform weak experience descriptions into quantified action points with 3 customized
+              alternatives.
             </p>
             <Link
               to="/price"
@@ -451,8 +538,12 @@ function ReportPage() {
         )}
 
         <div className="flex flex-col gap-1 mb-6">
-          <h2 className="font-display text-lg font-bold text-white">Interactive Bullet Optimizer</h2>
-          <p className="text-xs text-zinc-400">Paste a weak resume bullet point to rewrite it using action verbs and metrics.</p>
+          <h2 className="font-display text-lg font-bold text-white">
+            Interactive Bullet Optimizer
+          </h2>
+          <p className="text-xs text-zinc-400">
+            Paste a weak resume bullet point to rewrite it using action verbs and metrics.
+          </p>
         </div>
 
         <form onSubmit={handleOptimizeBullet} className="flex flex-col sm:flex-row gap-3">
@@ -481,10 +572,15 @@ function ReportPage() {
 
         {optimizedBullets.length > 0 && (
           <div className="mt-6 space-y-3">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-[#B8924A]">Optimized Alternatives</h4>
+            <h4 className="text-xs font-bold uppercase tracking-wider text-[#B8924A]">
+              Optimized Alternatives
+            </h4>
             <div className="space-y-2">
               {optimizedBullets.map((bullet, i) => (
-                <div key={i} className="rounded-xl border border-zinc-800 bg-zinc-950/40 p-4 text-xs leading-relaxed text-zinc-300">
+                <div
+                  key={i}
+                  className="rounded-xl border border-zinc-800 bg-zinc-950/40 p-4 text-xs leading-relaxed text-zinc-300"
+                >
                   {bullet}
                 </div>
               ))}

@@ -49,19 +49,20 @@
   --color-ink: var(--ink);
 
   --shadow-soft: 0 1px 2px oklch(0.2 0.02 250 / 0.04), 0 8px 24px -8px oklch(0.2 0.02 250 / 0.08);
-  --shadow-elevated: 0 1px 2px oklch(0.2 0.02 250 / 0.06), 0 24px 48px -16px oklch(0.2 0.02 250 / 0.16);
+  --shadow-elevated:
+    0 1px 2px oklch(0.2 0.02 250 / 0.06), 0 24px 48px -16px oklch(0.2 0.02 250 / 0.16);
 }
 
 :root {
   --radius: 0.875rem;
 
   /* Brand */
-  --ivory: oklch(0.972 0.035 92);          /* #FFF6DE */
-  --teal: oklch(0.84 0.075 195);           /* #8BDFDD */
+  --ivory: oklch(0.972 0.035 92); /* #FFF6DE */
+  --teal: oklch(0.84 0.075 195); /* #8BDFDD */
   --teal-soft: oklch(0.93 0.04 195);
-  --coral: oklch(0.74 0.13 40);            /* #F48F68 */
-  --gold: oklch(0.91 0.075 92);            /* #FFE394 */
-  --ink: oklch(0.21 0.03 260);             /* #1F2937 */
+  --coral: oklch(0.74 0.13 40); /* #F48F68 */
+  --gold: oklch(0.91 0.075 92); /* #FFE394 */
+  --ink: oklch(0.21 0.03 260); /* #1F2937 */
 
   /* Semantic — light (ivory) */
   --background: oklch(0.985 0.018 92);
@@ -86,9 +87,9 @@
 }
 
 .dark {
-  --background: oklch(0.21 0.025 260);     /* #1F2937 */
+  --background: oklch(0.21 0.025 260); /* #1F2937 */
   --foreground: oklch(0.96 0.008 92);
-  --card: oklch(0.26 0.025 260);           /* #374151 */
+  --card: oklch(0.26 0.025 260); /* #374151 */
   --card-foreground: oklch(0.96 0.008 92);
   --popover: oklch(0.26 0.025 260);
   --popover-foreground: oklch(0.96 0.008 92);
@@ -122,14 +123,19 @@
     font-feature-settings: "cv11", "ss01";
   }
 
-  h1, h2, h3, h4 {
+  h1,
+  h2,
+  h3,
+  h4 {
     font-family: var(--font-display);
     letter-spacing: -0.02em;
   }
 }
 
 @layer utilities {
-  .text-balance { text-wrap: balance; }
+  .text-balance {
+    text-wrap: balance;
+  }
   .bg-grid {
     background-image:
       linear-gradient(to right, oklch(0.21 0.03 260 / 0.045) 1px, transparent 1px),

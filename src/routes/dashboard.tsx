@@ -14,7 +14,7 @@ import {
   ShieldCheck,
   Menu,
   X,
-  Compass
+  Compass,
 } from "lucide-react";
 
 export const Route = createFileRoute("/dashboard")({

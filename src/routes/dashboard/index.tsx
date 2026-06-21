@@ -10,7 +10,7 @@ import {
   Crown,
   Calendar,
   ChevronRight,
-  Sparkles
+  Sparkles,
 } from "lucide-react";
 import {
   ResponsiveContainer,
@@ -20,7 +20,7 @@ import {
   YAxis,
   Tooltip,
   CartesianGrid,
-  Legend
+  Legend,
 } from "recharts";
 
 export const Route = createFileRoute("/dashboard/")({
@@ -71,9 +71,13 @@ function DashboardHome() {
 
   // Calculate statistics
   const totalScans = reports.length;
-  const avgAts = totalScans ? Math.round(reports.reduce((acc, r) => acc + r.ats_score, 0) / totalScans) : 0;
+  const avgAts = totalScans
+    ? Math.round(reports.reduce((acc, r) => acc + r.ats_score, 0) / totalScans)
+    : 0;
   const maxAts = totalScans ? Math.max(...reports.map((r) => r.ats_score)) : 0;
-  const avgJdMatch = totalScans ? Math.round(reports.reduce((acc, r) => acc + r.jd_match, 0) / totalScans) : 0;
+  const avgJdMatch = totalScans
+    ? Math.round(reports.reduce((acc, r) => acc + r.jd_match, 0) / totalScans)
+    : 0;
   const planType = subscription?.plan_type || "free";
 
   // Prepare chart data
@@ -168,7 +172,8 @@ function DashboardHome() {
           </div>
           <h2 className="font-display text-xl font-bold text-white">No scans analyzed yet</h2>
           <p className="mx-auto mt-2 max-w-sm text-sm text-zinc-400">
-            Upload your first resume PDF and paste a job description to get score feedback and AI rewriting.
+            Upload your first resume PDF and paste a job description to get score feedback and AI
+            rewriting.
           </p>
           <div className="mt-6">
             <Link
@@ -186,7 +191,9 @@ function DashboardHome() {
           <div className="rounded-2xl border border-zinc-800/60 bg-[#0d0d10] p-6 lg:col-span-2">
             <div className="flex flex-col gap-1 mb-6">
               <h2 className="font-display text-lg font-bold text-white">Performance Analytics</h2>
-              <p className="text-xs text-zinc-400">Track score changes and metrics over consecutive scans.</p>
+              <p className="text-xs text-zinc-400">
+                Track score changes and metrics over consecutive scans.
+              </p>
             </div>
             <div className="h-72 w-full text-xs">
               <ResponsiveContainer width="100%" height="100%">
@@ -205,7 +212,12 @@ function DashboardHome() {
                   <XAxis dataKey="name" stroke="#52525b" tickLine={false} />
                   <YAxis domain={[0, 100]} stroke="#52525b" tickLine={false} />
                   <Tooltip
-                    contentStyle={{ backgroundColor: "#0f0f12", borderColor: "#27272a", borderRadius: "12px", color: "#f4f4f5" }}
+                    contentStyle={{
+                      backgroundColor: "#0f0f12",
+                      borderColor: "#27272a",
+                      borderRadius: "12px",
+                      color: "#f4f4f5",
+                    }}
                   />
                   <Legend iconType="circle" wrapperStyle={{ paddingTop: "15px" }} />
                   <Area
@@ -236,42 +248,54 @@ function DashboardHome() {
                 <h2 className="font-display text-lg font-bold text-white">Recent Analyses</h2>
                 <p className="text-xs text-zinc-400">Review scores for recent job applications.</p>
               </div>
-              <Link to="/dashboard/history" className="text-xs font-semibold text-[#e6c17e] hover:underline">
+              <Link
+                to="/dashboard/history"
+                className="text-xs font-semibold text-[#e6c17e] hover:underline"
+              >
                 View all
               </Link>
             </div>
 
             <div className="flex-1 overflow-y-auto space-y-4 pr-1 max-h-[290px]">
-              {reports.slice(-5).reverse().map((report) => (
-                <div
-                  key={report.id}
-                  className="flex items-center justify-between rounded-xl border border-zinc-800/40 bg-zinc-900/10 p-3 hover:bg-zinc-900/30 transition duration-200"
-                >
-                  <div className="min-w-0 pr-2">
-                    <h3 className="text-xs font-bold text-zinc-200 truncate">{report.job_title}</h3>
-                    <div className="flex items-center gap-1.5 mt-1 text-[10px] text-zinc-400">
-                      <Calendar size={10} />
-                      {new Date(report.created_at).toLocaleDateString(undefined, {
-                        month: "short",
-                        day: "numeric",
-                        year: "2-digit"
-                      })}
+              {reports
+                .slice(-5)
+                .reverse()
+                .map((report) => (
+                  <div
+                    key={report.id}
+                    className="flex items-center justify-between rounded-xl border border-zinc-800/40 bg-zinc-900/10 p-3 hover:bg-zinc-900/30 transition duration-200"
+                  >
+                    <div className="min-w-0 pr-2">
+                      <h3 className="text-xs font-bold text-zinc-200 truncate">
+                        {report.job_title}
+                      </h3>
+                      <div className="flex items-center gap-1.5 mt-1 text-[10px] text-zinc-400">
+                        <Calendar size={10} />
+                        {new Date(report.created_at).toLocaleDateString(undefined, {
+                          month: "short",
+                          day: "numeric",
+                          year: "2-digit",
+                        })}
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-3 shrink-0">
+                      <div className="text-right">
+                        <div className="text-xs font-extrabold text-white">
+                          {report.ats_score} ATS
+                        </div>
+                        <div className="text-[10px] font-semibold text-[#2A8F8B]">
+                          {report.jd_match}% Match
+                        </div>
+                      </div>
+                      <Link
+                        to={`/dashboard/report/${report.id}`}
+                        className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-300 hover:text-white transition"
+                      >
+                        <ChevronRight size={14} />
+                      </Link>
                     </div>
                   </div>
-                  <div className="flex items-center gap-3 shrink-0">
-                    <div className="text-right">
-                      <div className="text-xs font-extrabold text-white">{report.ats_score} ATS</div>
-                      <div className="text-[10px] font-semibold text-[#2A8F8B]">{report.jd_match}% Match</div>
-                    </div>
-                    <Link
-                      to={`/dashboard/report/${report.id}`}
-                      className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-300 hover:text-white transition"
-                    >
-                      <ChevronRight size={14} />
-                    </Link>
-                  </div>
-                </div>
-              ))}
+                ))}
             </div>
           </div>
         </div>

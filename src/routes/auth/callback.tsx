@@ -44,7 +44,9 @@ function AuthCallbackPage() {
           const { data, error: exchangeError } = await supabase.auth.exchangeCodeForSession(code);
           if (exchangeError) {
             // Re-check session in case it was exchanged concurrently in the background
-            const { data: { session: backupSession } } = await supabase.auth.getSession();
+            const {
+              data: { session: backupSession },
+            } = await supabase.auth.getSession();
             if (backupSession) {
               toast.success("Signed in successfully");
               navigate({ to: "/" });
@@ -60,7 +62,9 @@ function AuthCallbackPage() {
           }
         } catch (err: any) {
           // Re-check session on any PKCE verifier exception (e.g. verifier already consumed & deleted)
-          const { data: { session: backupSession } } = await supabase.auth.getSession();
+          const {
+            data: { session: backupSession },
+          } = await supabase.auth.getSession();
           if (backupSession) {
             toast.success("Signed in successfully");
             navigate({ to: "/" });
@@ -105,7 +109,10 @@ function AuthCallbackPage() {
         description="Something went wrong while signing you in."
         footer={
           <>
-            <Link to="/login" className="font-medium text-foreground underline-offset-4 hover:underline">
+            <Link
+              to="/login"
+              className="font-medium text-foreground underline-offset-4 hover:underline"
+            >
               Back to sign in
             </Link>
           </>

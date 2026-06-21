@@ -14,7 +14,7 @@ import {
   AlertCircle,
   FileCheck,
   Plus,
-  Minus
+  Minus,
 } from "lucide-react";
 
 export const Route = createFileRoute("/dashboard/history")({
@@ -44,7 +44,9 @@ function HistoryPage() {
       return;
     }
     if (compareA === compareB) {
-      toast.error("Duplicate selection", { description: "Please select different scans to compare." });
+      toast.error("Duplicate selection", {
+        description: "Please select different scans to compare.",
+      });
       return;
     }
     setIsComparing(true);
@@ -129,12 +131,16 @@ function HistoryPage() {
                   <Sparkles size={18} className="text-[#B8924A]" />
                   Resume Version Comparison
                 </h2>
-                <p className="text-xs text-zinc-400">Select two historical audit reports to track score changes and keyword shifts.</p>
+                <p className="text-xs text-zinc-400">
+                  Select two historical audit reports to track score changes and keyword shifts.
+                </p>
               </div>
 
               <form onSubmit={handleCompare} className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div className="space-y-1">
-                  <label className="text-[10px] font-semibold uppercase tracking-wider text-zinc-500">Base Version (Before)</label>
+                  <label className="text-[10px] font-semibold uppercase tracking-wider text-zinc-500">
+                    Base Version (Before)
+                  </label>
                   <select
                     value={compareA}
                     onChange={(e) => {
@@ -146,14 +152,17 @@ function HistoryPage() {
                     <option value="">Select baseline scan</option>
                     {reports.map((r) => (
                       <option key={r.id} value={r.id}>
-                        {r.job_title} ({new Date(r.created_at).toLocaleDateString()}) - ATS: {r.ats_score}
+                        {r.job_title} ({new Date(r.created_at).toLocaleDateString()}) - ATS:{" "}
+                        {r.ats_score}
                       </option>
                     ))}
                   </select>
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-[10px] font-semibold uppercase tracking-wider text-zinc-500">Target Version (After)</label>
+                  <label className="text-[10px] font-semibold uppercase tracking-wider text-zinc-500">
+                    Target Version (After)
+                  </label>
                   <select
                     value={compareB}
                     onChange={(e) => {
@@ -165,7 +174,8 @@ function HistoryPage() {
                     <option value="">Select optimized scan</option>
                     {reports.map((r) => (
                       <option key={r.id} value={r.id}>
-                        {r.job_title} ({new Date(r.created_at).toLocaleDateString()}) - ATS: {r.ats_score}
+                        {r.job_title} ({new Date(r.created_at).toLocaleDateString()}) - ATS:{" "}
+                        {r.ats_score}
                       </option>
                     ))}
                   </select>
@@ -188,14 +198,22 @@ function HistoryPage() {
                     {/* ATS score delta */}
                     <div className="rounded-xl border border-zinc-800/50 bg-zinc-900/10 p-4 flex justify-between items-center">
                       <div>
-                        <span className="text-[10px] font-semibold uppercase tracking-wider text-zinc-500">ATS Core Shift</span>
+                        <span className="text-[10px] font-semibold uppercase tracking-wider text-zinc-500">
+                          ATS Core Shift
+                        </span>
                         <div className="font-display text-lg font-bold text-white mt-1">
-                          {reportA.ats_score} <ArrowRight className="inline h-3.5 w-3.5 mx-1 text-zinc-400" /> {reportB.ats_score}
+                          {reportA.ats_score}{" "}
+                          <ArrowRight className="inline h-3.5 w-3.5 mx-1 text-zinc-400" />{" "}
+                          {reportB.ats_score}
                         </div>
                       </div>
-                      <span className={`inline-flex rounded-full px-2.5 py-1 text-xs font-bold ${
-                        deltas.scoreDelta >= 0 ? "bg-green-500/10 text-green-400" : "bg-red-500/10 text-red-400"
-                      }`}>
+                      <span
+                        className={`inline-flex rounded-full px-2.5 py-1 text-xs font-bold ${
+                          deltas.scoreDelta >= 0
+                            ? "bg-green-500/10 text-green-400"
+                            : "bg-red-500/10 text-red-400"
+                        }`}
+                      >
                         {deltas.scoreDelta >= 0 ? `+${deltas.scoreDelta}` : deltas.scoreDelta}
                       </span>
                     </div>
@@ -203,14 +221,22 @@ function HistoryPage() {
                     {/* JD Match delta */}
                     <div className="rounded-xl border border-zinc-800/50 bg-zinc-900/10 p-4 flex justify-between items-center">
                       <div>
-                        <span className="text-[10px] font-semibold uppercase tracking-wider text-zinc-500">JD Match Shift</span>
+                        <span className="text-[10px] font-semibold uppercase tracking-wider text-zinc-500">
+                          JD Match Shift
+                        </span>
                         <div className="font-display text-lg font-bold text-white mt-1">
-                          {reportA.jd_match}% <ArrowRight className="inline h-3.5 w-3.5 mx-1 text-zinc-400" /> {reportB.jd_match}%
+                          {reportA.jd_match}%{" "}
+                          <ArrowRight className="inline h-3.5 w-3.5 mx-1 text-zinc-400" />{" "}
+                          {reportB.jd_match}%
                         </div>
                       </div>
-                      <span className={`inline-flex rounded-full px-2.5 py-1 text-xs font-bold ${
-                        deltas.matchDelta >= 0 ? "bg-green-500/10 text-green-400" : "bg-red-500/10 text-red-400"
-                      }`}>
+                      <span
+                        className={`inline-flex rounded-full px-2.5 py-1 text-xs font-bold ${
+                          deltas.matchDelta >= 0
+                            ? "bg-green-500/10 text-green-400"
+                            : "bg-red-500/10 text-red-400"
+                        }`}
+                      >
                         {deltas.matchDelta >= 0 ? `+${deltas.matchDelta}` : deltas.matchDelta}
                       </span>
                     </div>
@@ -218,14 +244,22 @@ function HistoryPage() {
                     {/* Health delta */}
                     <div className="rounded-xl border border-zinc-800/50 bg-zinc-900/10 p-4 flex justify-between items-center">
                       <div>
-                        <span className="text-[10px] font-semibold uppercase tracking-wider text-zinc-500">Resume Health Shift</span>
+                        <span className="text-[10px] font-semibold uppercase tracking-wider text-zinc-500">
+                          Resume Health Shift
+                        </span>
                         <div className="font-display text-lg font-bold text-white mt-1">
-                          {reportA.resume_health} <ArrowRight className="inline h-3.5 w-3.5 mx-1 text-zinc-400" /> {reportB.resume_health}
+                          {reportA.resume_health}{" "}
+                          <ArrowRight className="inline h-3.5 w-3.5 mx-1 text-zinc-400" />{" "}
+                          {reportB.resume_health}
                         </div>
                       </div>
-                      <span className={`inline-flex rounded-full px-2.5 py-1 text-xs font-bold ${
-                        deltas.healthDelta >= 0 ? "bg-green-500/10 text-green-400" : "bg-red-500/10 text-red-400"
-                      }`}>
+                      <span
+                        className={`inline-flex rounded-full px-2.5 py-1 text-xs font-bold ${
+                          deltas.healthDelta >= 0
+                            ? "bg-green-500/10 text-green-400"
+                            : "bg-red-500/10 text-red-400"
+                        }`}
+                      >
                         {deltas.healthDelta >= 0 ? `+${deltas.healthDelta}` : deltas.healthDelta}
                       </span>
                     </div>
@@ -240,7 +274,10 @@ function HistoryPage() {
                       </span>
                       <div className="flex flex-wrap gap-1.5">
                         {deltas.addedKeywords.map((k) => (
-                          <span key={k} className="rounded border border-[#2A8F8B]/30 bg-[#2A8F8B]/5 px-2 py-1 text-[11px] font-medium text-[#2A8F8B]">
+                          <span
+                            key={k}
+                            className="rounded border border-[#2A8F8B]/30 bg-[#2A8F8B]/5 px-2 py-1 text-[11px] font-medium text-[#2A8F8B]"
+                          >
                             {k}
                           </span>
                         ))}
@@ -257,7 +294,10 @@ function HistoryPage() {
                       </span>
                       <div className="flex flex-wrap gap-1.5">
                         {deltas.removedKeywords.map((k) => (
-                          <span key={k} className="rounded border border-red-500/20 bg-red-500/5 px-2 py-1 text-[11px] font-medium text-red-400">
+                          <span
+                            key={k}
+                            className="rounded border border-red-500/20 bg-red-500/5 px-2 py-1 text-[11px] font-medium text-red-400"
+                          >
                             {k}
                           </span>
                         ))}
@@ -295,12 +335,18 @@ function HistoryPage() {
                         {new Date(report.created_at).toLocaleDateString(undefined, {
                           month: "short",
                           day: "numeric",
-                          year: "numeric"
+                          year: "numeric",
                         })}
                       </td>
-                      <td className="py-4 text-center tabular-nums text-white font-semibold">{report.ats_score}</td>
-                      <td className="py-4 text-center tabular-nums text-[#2A8F8B] font-semibold">{report.jd_match}%</td>
-                      <td className="py-4 text-center tabular-nums text-zinc-300">{report.resume_health}</td>
+                      <td className="py-4 text-center tabular-nums text-white font-semibold">
+                        {report.ats_score}
+                      </td>
+                      <td className="py-4 text-center tabular-nums text-[#2A8F8B] font-semibold">
+                        {report.jd_match}%
+                      </td>
+                      <td className="py-4 text-center tabular-nums text-zinc-300">
+                        {report.resume_health}
+                      </td>
                       <td className="py-4 text-right">
                         <Link
                           to={`/dashboard/report/${report.id}`}

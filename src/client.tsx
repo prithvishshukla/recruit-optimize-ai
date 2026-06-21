@@ -1,17 +1,17 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import { RouterProvider, createRouter } from '@tanstack/react-router';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { RouterProvider, createRouter } from "@tanstack/react-router";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-import { AuthProvider } from '@/contexts/auth-context';
-import { Toaster } from '@/components/ui/sonner';
-import { GlobalErrorBoundary } from '@/components/global-error-boundary';
+import { AuthProvider } from "@/contexts/auth-context";
+import { Toaster } from "@/components/ui/sonner";
+import { GlobalErrorBoundary } from "@/components/global-error-boundary";
 
 // Import styles first
-import './styles.css';
+import "./styles.css";
 
 // Import the generated route tree
-import { routeTree } from './routeTree.gen';
+import { routeTree } from "./routeTree.gen";
 
 const queryClient = new QueryClient();
 
@@ -23,14 +23,14 @@ const router = createRouter({
   },
 });
 
-declare module '@tanstack/react-router' {
+declare module "@tanstack/react-router" {
   interface Register {
     router: typeof router;
   }
 }
 
 // Render app
-const root = ReactDOM.createRoot(document.getElementById('root')!);
+const root = ReactDOM.createRoot(document.getElementById("root")!);
 
 root.render(
   <React.StrictMode>
@@ -42,5 +42,5 @@ root.render(
         </AuthProvider>
       </QueryClientProvider>
     </GlobalErrorBoundary>
-  </React.StrictMode>
+  </React.StrictMode>,
 );

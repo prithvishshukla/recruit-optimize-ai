@@ -75,10 +75,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "TalentForge AI — ATS Resume Intelligence Platform" },
-      { name: "description", content: "Optimize resumes for ATS, match job descriptions, and rewrite weak sections with AI. Built for students, professionals, and career coaches." },
+      {
+        name: "description",
+        content:
+          "Optimize resumes for ATS, match job descriptions, and rewrite weak sections with AI. Built for students, professionals, and career coaches.",
+      },
       { name: "author", content: "TalentForge AI" },
       { property: "og:title", content: "TalentForge AI — ATS Resume Intelligence" },
-      { property: "og:description", content: "Forge potential. Build futures. Premium ATS analysis, JD matching, and AI resume rewriting." },
+      {
+        property: "og:description",
+        content:
+          "Forge potential. Build futures. Premium ATS analysis, JD matching, and AI resume rewriting.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],

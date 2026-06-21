@@ -62,12 +62,14 @@ export class GlobalErrorBoundary extends Component<Props, State> {
               Something went wrong
             </h1>
             <p className="mt-4 text-sm leading-relaxed text-zinc-400">
-              An unexpected runtime error occurred. We have captured this error and are looking into it.
+              An unexpected runtime error occurred. We have captured this error and are looking into
+              it.
             </p>
 
             {this.state.error && (
               <div className="mt-6 rounded-xl border border-white/5 bg-[#18181b]/50 p-4 text-left font-mono text-[12px] leading-relaxed text-zinc-500 overflow-x-auto max-h-36">
-                <span className="text-red-400 font-semibold">{this.state.error.name}:</span> {this.state.error.message}
+                <span className="text-red-400 font-semibold">{this.state.error.name}:</span>{" "}
+                {this.state.error.message}
                 {this.state.error.stack && (
                   <pre className="mt-2 text-[10px] text-zinc-600 overflow-x-auto whitespace-pre">
                     {this.state.error.stack.split("\n").slice(0, 4).join("\n")}

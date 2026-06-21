@@ -17,9 +17,9 @@ const supabaseAnonKey = rawKey?.trim() ?? "";
 // A valid config must have both URL and key, and not be default placeholder values
 export const isSupabaseConfigured = Boolean(
   supabaseUrl &&
-    supabaseAnonKey &&
-    !supabaseUrl.includes("your-project") &&
-    !supabaseAnonKey.includes("your-anon-or-publishable-key")
+  supabaseAnonKey &&
+  !supabaseUrl.includes("your-project") &&
+  !supabaseAnonKey.includes("your-anon-or-publishable-key"),
 );
 
 if (!isSupabaseConfigured) {
@@ -34,7 +34,9 @@ if (!isSupabaseConfigured) {
 
 // Use safe placeholders to avoid throwing during initialization
 const clientUrl = isSupabaseConfigured ? supabaseUrl : "https://placeholder-project.supabase.co";
-const clientKey = isSupabaseConfigured ? supabaseAnonKey : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBsYWNlaG9sZGVyIn0.signature";
+const clientKey = isSupabaseConfigured
+  ? supabaseAnonKey
+  : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBsYWNlaG9sZGVyIn0.signature";
 
 export const supabase = createClient(clientUrl, clientKey, {
   auth: {

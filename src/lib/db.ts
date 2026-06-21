@@ -131,11 +131,7 @@ export const db = {
   // 1. User profile actions
   getUserProfile: async (userId: string, userEmail?: string): Promise<DbUser> => {
     try {
-      const { data, error } = await supabase
-        .from("users")
-        .select("*")
-        .eq("id", userId)
-        .single();
+      const { data, error } = await supabase.from("users").select("*").eq("id", userId).single();
 
       if (error) throw error;
       return data as DbUser;
@@ -176,7 +172,9 @@ export const db = {
       return data as DbSubscription;
     } catch (error: any) {
       if (isMissingTableError(error)) {
-        console.warn("[DB Fallback] public.subscriptions table not found, loading from local storage.");
+        console.warn(
+          "[DB Fallback] public.subscriptions table not found, loading from local storage.",
+        );
         const subs = getLocalItem<DbSubscription[]>("subscriptions", []);
         let localSub = subs.find((s) => s.user_id === userId);
         if (!localSub) {
@@ -196,7 +194,11 @@ export const db = {
     }
   },
 
-  upsertSubscription: async (userId: string, planType: "free" | "premium", periodEnd?: string): Promise<DbSubscription> => {
+  upsertSubscription: async (
+    userId: string,
+    planType: "free" | "premium",
+    periodEnd?: string,
+  ): Promise<DbSubscription> => {
     try {
       const { data, error } = await supabase
         .from("subscriptions")
@@ -214,7 +216,9 @@ export const db = {
       return data as DbSubscription;
     } catch (error: any) {
       if (isMissingTableError(error)) {
-        console.warn("[DB Fallback] public.subscriptions table not found, saving to local storage.");
+        console.warn(
+          "[DB Fallback] public.subscriptions table not found, saving to local storage.",
+        );
         const subs = getLocalItem<DbSubscription[]>("subscriptions", []);
         const index = subs.findIndex((s) => s.user_id === userId);
         const sub: DbSubscription = {
@@ -241,11 +245,7 @@ export const db = {
   // 3. Resume actions
   insertResume: async (resume: Omit<DbResume, "id" | "created_at">): Promise<DbResume> => {
     try {
-      const { data, error } = await supabase
-        .from("resumes")
-        .insert(resume)
-        .select()
-        .single();
+      const { data, error } = await supabase.from("resumes").insert(resume).select().single();
 
       if (error) throw error;
       return data as DbResume;
@@ -279,17 +279,21 @@ export const db = {
       return data as DbAnalysisReport[];
     } catch (error: any) {
       if (isMissingTableError(error)) {
-        console.warn("[DB Fallback] public.analysis_reports table not found, loading from local storage.");
+        console.warn(
+          "[DB Fallback] public.analysis_reports table not found, loading from local storage.",
+        );
         const reports = getLocalItem<DbAnalysisReport[]>("analysis_reports", []);
         const userReports = reports.filter((r) => r.user_id === userId);
-        
+
         // Mock the relationship with resumes
         const resumes = getLocalItem<DbResume[]>("resumes", []);
         return userReports.map((r) => {
           const matchResume = resumes.find((res) => res.id === r.resume_id);
           return {
             ...r,
-            resumes: matchResume ? { file_name: matchResume.file_name, file_size: matchResume.file_size } : null,
+            resumes: matchResume
+              ? { file_name: matchResume.file_name, file_size: matchResume.file_size }
+              : null,
           };
         }) as any[];
       }
@@ -309,7 +313,9 @@ export const db = {
       return data as DbAnalysisReport;
     } catch (error: any) {
       if (isMissingTableError(error)) {
-        console.warn("[DB Fallback] public.analysis_reports table not found, loading detail from local storage.");
+        console.warn(
+          "[DB Fallback] public.analysis_reports table not found, loading detail from local storage.",
+        );
         const reports = getLocalItem<DbAnalysisReport[]>("analysis_reports", []);
         const report = reports.find((r) => r.id === reportId);
         if (!report) throw new Error("Report not found in local storage fallback");
@@ -318,14 +324,18 @@ export const db = {
         const matchResume = resumes.find((res) => res.id === report.resume_id);
         return {
           ...report,
-          resumes: matchResume ? { file_name: matchResume.file_name, file_size: matchResume.file_size } : null,
+          resumes: matchResume
+            ? { file_name: matchResume.file_name, file_size: matchResume.file_size }
+            : null,
         } as any;
       }
       throw error;
     }
   },
 
-  insertAnalysisReport: async (report: Omit<DbAnalysisReport, "id" | "created_at">): Promise<DbAnalysisReport> => {
+  insertAnalysisReport: async (
+    report: Omit<DbAnalysisReport, "id" | "created_at">,
+  ): Promise<DbAnalysisReport> => {
     try {
       const { data, error } = await supabase
         .from("analysis_reports")
@@ -337,7 +347,9 @@ export const db = {
       return data as DbAnalysisReport;
     } catch (error: any) {
       if (isMissingTableError(error)) {
-        console.warn("[DB Fallback] public.analysis_reports table not found, saving to local storage.");
+        console.warn(
+          "[DB Fallback] public.analysis_reports table not found, saving to local storage.",
+        );
         const reports = getLocalItem<DbAnalysisReport[]>("analysis_reports", []);
         const newReport: DbAnalysisReport = {
           ...report,
@@ -393,7 +405,9 @@ export const db = {
   },
 
   // 5. Resume Versions actions
-  insertResumeVersion: async (version: Omit<DbResumeVersion, "id" | "created_at">): Promise<DbResumeVersion> => {
+  insertResumeVersion: async (
+    version: Omit<DbResumeVersion, "id" | "created_at">,
+  ): Promise<DbResumeVersion> => {
     try {
       const { data, error } = await supabase
         .from("resume_versions")
@@ -405,7 +419,9 @@ export const db = {
       return data as DbResumeVersion;
     } catch (error: any) {
       if (isMissingTableError(error)) {
-        console.warn("[DB Fallback] public.resume_versions table not found, saving to local storage.");
+        console.warn(
+          "[DB Fallback] public.resume_versions table not found, saving to local storage.",
+        );
         const versions = getLocalItem<DbResumeVersion[]>("resume_versions", []);
         const newVersion: DbResumeVersion = {
           ...version,
@@ -423,11 +439,7 @@ export const db = {
   // 6. Payments actions
   insertPayment: async (payment: Omit<DbPayment, "id" | "created_at">): Promise<DbPayment> => {
     try {
-      const { data, error } = await supabase
-        .from("payments")
-        .insert(payment)
-        .select()
-        .single();
+      const { data, error } = await supabase.from("payments").insert(payment).select().single();
 
       if (error) throw error;
       return data as DbPayment;
@@ -476,19 +488,19 @@ export const db = {
   },
 
   // 7. Activity Log actions
-  insertActivityLog: async (log: Omit<DbActivityLog, "id" | "created_at">): Promise<DbActivityLog> => {
+  insertActivityLog: async (
+    log: Omit<DbActivityLog, "id" | "created_at">,
+  ): Promise<DbActivityLog> => {
     try {
-      const { data, error } = await supabase
-        .from("activity_logs")
-        .insert(log)
-        .select()
-        .single();
+      const { data, error } = await supabase.from("activity_logs").insert(log).select().single();
 
       if (error) throw error;
       return data as DbActivityLog;
     } catch (error: any) {
       if (isMissingTableError(error)) {
-        console.warn("[DB Fallback] public.activity_logs table not found, saving to local storage.");
+        console.warn(
+          "[DB Fallback] public.activity_logs table not found, saving to local storage.",
+        );
         const logs = getLocalItem<DbActivityLog[]>("activity_logs", []);
         const newLog: DbActivityLog = {
           ...log,
@@ -548,8 +560,12 @@ export const db = {
 
         const totalUsers = Math.max(users.length, 1);
         const totalAnalyses = reports.length;
-        const activeSubscribers = subs.filter((s) => s.plan_type === "premium" && s.status === "active").length;
-        const totalRevenue = payments.filter((p) => p.status === "success").reduce((acc, p) => acc + p.amount, 0) / 100;
+        const activeSubscribers = subs.filter(
+          (s) => s.plan_type === "premium" && s.status === "active",
+        ).length;
+        const totalRevenue =
+          payments.filter((p) => p.status === "success").reduce((acc, p) => acc + p.amount, 0) /
+          100;
 
         return {
           totalUsers,

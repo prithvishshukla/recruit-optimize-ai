@@ -141,9 +141,13 @@ ${jdText}
       rewrites: {
         summary: parsedData.rewrites?.summary || "",
         skills: Array.isArray(parsedData.rewrites?.skills) ? parsedData.rewrites.skills : [],
-        experience: Array.isArray(parsedData.rewrites?.experience) ? parsedData.rewrites.experience : [],
+        experience: Array.isArray(parsedData.rewrites?.experience)
+          ? parsedData.rewrites.experience
+          : [],
         projects: Array.isArray(parsedData.rewrites?.projects) ? parsedData.rewrites.projects : [],
-        achievements: Array.isArray(parsedData.rewrites?.achievements) ? parsedData.rewrites.achievements : [],
+        achievements: Array.isArray(parsedData.rewrites?.achievements)
+          ? parsedData.rewrites.achievements
+          : [],
       },
     };
   } catch (error: any) {
@@ -161,7 +165,7 @@ export async function optimizeBulletPoint(bulletPoint: string): Promise<string[]
     return [
       `[ATS Metric Optimized] Accomplished target KPI goals by 18% utilizing optimized framework strategies.`,
       `[ATS Action Verb] Spearheaded execution of scalable architectures, reducing operational overhead by $12k.`,
-      `[ATS Quantified] Configured automated pipelines that improved pipeline processing rates by 35%.`
+      `[ATS Quantified] Configured automated pipelines that improved pipeline processing rates by 35%.`,
     ];
   }
 
@@ -211,7 +215,7 @@ Bullet Point:
     return [
       `Spearheaded development of features matching bullet point, yielding a 15% increase in efficiency.`,
       `Engineered critical platform modules, resulting in a 25% decrease in load times.`,
-      `Orchestrated cross-functional releases of systems, automating tasks and saving 10 hours weekly.`
+      `Orchestrated cross-functional releases of systems, automating tasks and saving 10 hours weekly.`,
     ];
   }
 }
@@ -232,26 +236,33 @@ function simulateAnalysis(resumeText: string, jdText: string): AnalysisResponse 
     resumeHealth: healthBase,
     keywordCoverage: 60,
     foundKeywords: ["React", "TypeScript", "Vite", "REST APIs", "Tailwind CSS", "Git"],
-    missingKeywords: ["CI/CD pipelines", "AWS services", "Unit Testing", "OAuth2", "Microservices", "Docker"],
+    missingKeywords: [
+      "CI/CD pipelines",
+      "AWS services",
+      "Unit Testing",
+      "OAuth2",
+      "Microservices",
+      "Docker",
+    ],
     strengths: [
       "Excellent technical stack alignment with React, TypeScript and modern CSS frameworks.",
       "Clear formatting and readable design layout structure.",
-      "Good use of modern front-end engineering libraries and concepts."
+      "Good use of modern front-end engineering libraries and concepts.",
     ],
     weaknesses: [
       "Lack of quantified achievements (e.g. percentages, rupee amounts saved, hours saved).",
       "Missing DevOps keywords such as deployment configurations, Docker, or cloud platforms.",
-      "Work history bullets lack strong initial action verbs in several sections."
+      "Work history bullets lack strong initial action verbs in several sections.",
     ],
     atsRisks: [
       "Tables or multi-column layouts detected — some parsers may misalign reading flow.",
       "No direct contact section or postal address found — some older engines filter these.",
-      "PDF uses non-standard custom icons for bullet points which can parse as random symbols."
+      "PDF uses non-standard custom icons for bullet points which can parse as random symbols.",
     ],
     suggestions: [
       "Add metrics to your experience bullets, for example: 'Reduced bundle size by 30% using tree-shaking'.",
       "Include key missing backend concepts like 'REST APIs integration' and 'JWT authentication'.",
-      "Rewrite weak summary statement to explicitly list career targets and years of expertise."
+      "Rewrite weak summary statement to explicitly list career targets and years of expertise.",
     ],
     sectionScores: {
       summary: 65,
@@ -262,23 +273,24 @@ function simulateAnalysis(resumeText: string, jdText: string): AnalysisResponse 
       achievements: 50,
     },
     rewrites: {
-      summary: "Results-driven Software Engineer with expertise in building scalable React web applications. Proven track record of optimizing client performance, implementing Type-safe pipelines, and deploying robust user interfaces. Committed to quality code and agile development values.",
+      summary:
+        "Results-driven Software Engineer with expertise in building scalable React web applications. Proven track record of optimizing client performance, implementing Type-safe pipelines, and deploying robust user interfaces. Committed to quality code and agile development values.",
       skills: [
         "Core Tech: React 19, TypeScript, Vite, Tailwind CSS, TanStack Query",
-        "Systems: Supabase DB, RLS configuration, Cloudinary integration, REST API Architecture"
+        "Systems: Supabase DB, RLS configuration, Cloudinary integration, REST API Architecture",
       ],
       experience: [
         "Spearheaded redesign of ATS analytics dashboard, improving user session durations by 22%.",
-        "Engineered secure auth patterns using Supabase JWT tokens, reducing API breach vectors by 40%."
+        "Engineered secure auth patterns using Supabase JWT tokens, reducing API breach vectors by 40%.",
       ],
       projects: [
         "Developed Resume optimization tool utilizing Gemini API, parsing over 1,500 resumes with a 98% parsing accuracy rate.",
-        "Created custom component design system in Tailwind, decreasing project-wide CSS bloat by 35%."
+        "Created custom component design system in Tailwind, decreasing project-wide CSS bloat by 35%.",
       ],
       achievements: [
         "Recipient of Engineering Excellence Award for outstanding UI performance optimizations.",
-        "Graduated with honors in Computer Science, ranking in the top 5% of the class."
-      ]
-    }
+        "Graduated with honors in Computer Science, ranking in the top 5% of the class.",
+      ],
+    },
   };
 }

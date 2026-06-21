@@ -11,7 +11,7 @@ import {
   FileCheck,
   Calendar,
   AlertTriangle,
-  Lock
+  Lock,
 } from "lucide-react";
 
 export const Route = createFileRoute("/dashboard/admin")({
@@ -74,7 +74,8 @@ function AdminDashboardPage() {
         </div>
         <h1 className="font-display text-2xl font-bold text-white">Access Denied</h1>
         <p className="mt-2 text-sm text-zinc-400 max-w-sm">
-          You do not have administrative permissions. This page is restricted to platform administrators.
+          You do not have administrative permissions. This page is restricted to platform
+          administrators.
         </p>
         <Link
           to="/dashboard"
@@ -88,9 +89,24 @@ function AdminDashboardPage() {
 
   const kpis = [
     { label: "Total Users", value: adminStats?.totalUsers || 0, icon: Users, color: "#3b82f6" },
-    { label: "Total Revenue", value: `₹${adminStats?.totalRevenue || 0}`, icon: DollarSign, color: "#10b981" },
-    { label: "Total Analyses", value: adminStats?.totalAnalyses || 0, icon: FileCheck, color: "#f59e0b" },
-    { label: "Active Subscribers", value: adminStats?.activeSubscribers || 0, icon: TrendingUp, color: "#8b5cf6" },
+    {
+      label: "Total Revenue",
+      value: `₹${adminStats?.totalRevenue || 0}`,
+      icon: DollarSign,
+      color: "#10b981",
+    },
+    {
+      label: "Total Analyses",
+      value: adminStats?.totalAnalyses || 0,
+      icon: FileCheck,
+      color: "#f59e0b",
+    },
+    {
+      label: "Active Subscribers",
+      value: adminStats?.activeSubscribers || 0,
+      icon: TrendingUp,
+      color: "#8b5cf6",
+    },
   ];
 
   return (
@@ -146,23 +162,33 @@ function AdminDashboardPage() {
             <tbody className="divide-y divide-zinc-800/50">
               {payments.map((payment: any) => (
                 <tr key={payment.id} className="hover:bg-zinc-900/10 transition duration-150">
-                  <td className="py-4 font-semibold text-zinc-200">{payment.profiles?.email || "Unknown User"}</td>
-                  <td className="py-4 font-mono text-xs text-zinc-400">{payment.razorpay_payment_id}</td>
+                  <td className="py-4 font-semibold text-zinc-200">
+                    {payment.profiles?.email || "Unknown User"}
+                  </td>
+                  <td className="py-4 font-mono text-xs text-zinc-400">
+                    {payment.razorpay_payment_id}
+                  </td>
                   <td className="py-4 text-zinc-400">
                     {new Date(payment.created_at).toLocaleDateString(undefined, {
                       month: "short",
                       day: "numeric",
                       year: "numeric",
                       hour: "2-digit",
-                      minute: "2-digit"
+                      minute: "2-digit",
                     })}
                   </td>
                   <td className="py-4 uppercase text-xs font-bold text-zinc-300">{payment.plan}</td>
-                  <td className="py-4 text-center tabular-nums text-white">₹{payment.amount / 100}</td>
+                  <td className="py-4 text-center tabular-nums text-white">
+                    ₹{payment.amount / 100}
+                  </td>
                   <td className="py-4 text-right">
-                    <span className={`inline-flex rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase ${
-                      payment.status === "success" ? "bg-emerald-500/10 text-emerald-400" : "bg-red-500/10 text-red-400"
-                    }`}>
+                    <span
+                      className={`inline-flex rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase ${
+                        payment.status === "success"
+                          ? "bg-emerald-500/10 text-emerald-400"
+                          : "bg-red-500/10 text-red-400"
+                      }`}
+                    >
                       {payment.status}
                     </span>
                   </td>

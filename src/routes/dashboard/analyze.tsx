@@ -14,7 +14,7 @@ import {
   Loader2,
   CheckCircle,
   X,
-  FileCheck
+  FileCheck,
 } from "lucide-react";
 
 export const Route = createFileRoute("/dashboard/analyze")({
@@ -54,7 +54,7 @@ function AnalyzePage() {
       startOfDay.setHours(0, 0, 0, 0);
 
       const reports = await db.getUserReports(user.id);
-      const todayReports = reports.filter(r => new Date(r.created_at) >= startOfDay);
+      const todayReports = reports.filter((r) => new Date(r.created_at) >= startOfDay);
       return todayReports.length;
     },
     enabled: !!user?.id,
@@ -122,13 +122,15 @@ function AnalyzePage() {
       return;
     }
     if (!jobDescription.trim() || jobDescription.length < 50) {
-      toast.error("Invalid Job Description", { description: "Please enter a job description of at least 50 characters." });
+      toast.error("Invalid Job Description", {
+        description: "Please enter a job description of at least 50 characters.",
+      });
       return;
     }
 
     if (isLimitReached) {
       toast.error("Daily Scan Limit Exceeded", {
-        description: "Free tier users are limited to 1 scan per day. Please upgrade to Premium."
+        description: "Free tier users are limited to 1 scan per day. Please upgrade to Premium.",
       });
       return;
     }
@@ -144,7 +146,12 @@ function AnalyzePage() {
       const uploadPreset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
 
       // Only attempt Cloudinary upload if variables are configured
-      if (cloudName && uploadPreset && !cloudName.includes("your-") && !uploadPreset.includes("your-")) {
+      if (
+        cloudName &&
+        uploadPreset &&
+        !cloudName.includes("your-") &&
+        !uploadPreset.includes("your-")
+      ) {
         try {
           const formData = new FormData();
           formData.append("file", file);
@@ -152,7 +159,7 @@ function AnalyzePage() {
 
           const cloudinaryRes = await fetch(
             `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
-            { method: "POST", body: formData }
+            { method: "POST", body: formData },
           );
 
           if (!cloudinaryRes.ok) {
@@ -253,7 +260,9 @@ function AnalyzePage() {
           <div className="text-sm leading-relaxed">
             <strong className="text-white">Daily Scan Limit Reached</strong>
             <p className="mt-1 text-zinc-300">
-              Your free tier account permits 1 ATS scan daily. You have already completed your daily scan quota. Upgrade to unlock unlimited scans, bullet point optimization, and AI resume rewrites.
+              Your free tier account permits 1 ATS scan daily. You have already completed your daily
+              scan quota. Upgrade to unlock unlimited scans, bullet point optimization, and AI
+              resume rewrites.
             </p>
             <div className="mt-3.5">
               <Link
@@ -272,9 +281,7 @@ function AnalyzePage() {
         <div className="rounded-3xl border border-zinc-800/80 bg-[#0d0d10] p-12 text-center">
           <Loader2 className="mx-auto h-12 w-12 animate-spin text-[#B8924A] mb-6" />
           <h2 className="font-display text-xl font-bold text-white">Performing Resume Audit</h2>
-          <p className="mt-2 text-sm text-zinc-400 max-w-sm mx-auto">
-            {analysisStatus}
-          </p>
+          <p className="mt-2 text-sm text-zinc-400 max-w-sm mx-auto">{analysisStatus}</p>
           <div className="mt-6 mx-auto max-w-md bg-zinc-800 h-2 rounded-full overflow-hidden">
             <div className="bg-[#B8924A] h-full animate-[pulse_1.5s_infinite] w-[70%]" />
           </div>
@@ -312,9 +319,7 @@ function AnalyzePage() {
                 <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-zinc-900 border border-zinc-800 text-zinc-400 mb-4">
                   <Upload size={22} />
                 </div>
-                <h3 className="text-sm font-bold text-zinc-200">
-                  Drag and drop resume PDF
-                </h3>
+                <h3 className="text-sm font-bold text-zinc-200">Drag and drop resume PDF</h3>
                 <p className="mt-1 text-xs text-zinc-500">
                   PDF format only. Maximum file size 10 MB.
                 </p>
